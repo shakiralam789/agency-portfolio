@@ -140,3 +140,24 @@
 .triangle-down {
     @apply  bottom-full w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-t-black;
 }
+
+swiper-button-next,
+.swiper-button-prev {
+  color: #ffffff;
+  background-color: #1f2937;
+  width: 48px;
+  height: 48px;
+  border-radius: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.swiper-button-next:after,
+.swiper-button-prev:after {
+  font-size: 20px;
+  font-weight: bold;
+}
+.swiper-button-disabled{
+    @apply opacity-50 pointer-events-none;
+}
