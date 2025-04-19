@@ -1,0 +1,142 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+.container {
+    @apply max-2xl:max-w-[1140px];
+    margin: 0 auto;
+    padding: 0 15px;
+}
+
+@layer components {
+
+    p {
+        @apply leading-loose;
+    }
+    .def-para{
+        @apply font-16 text-gray-text;
+    }
+
+   .font-90 {
+    font-size: clamp(2.5rem, 5vw + 1rem, 5.625rem); /* 40px to 90px */
+    }
+
+    .font-70 {
+    font-size: clamp(2rem, 4vw + 1rem, 4.375rem); /* 32px to 70px */
+    }
+
+    .font-48 {
+    font-size: clamp(1.75rem, 3vw + 1rem, 3rem); /* 28px to 48px */
+    }
+
+    .font-26 {
+    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.625rem); /* 18px to 26px */
+    }
+
+    .font-18 {
+    font-size: clamp(0.875rem, 0.5vw + 0.75rem, 1.125rem); /* 14px to 18px */
+    }
+
+    .font-16 {
+    font-size: clamp(0.75rem, 0.25vw + 0.7rem, 1rem); /* 12px to 16px */
+    }
+
+    .def-label{
+        @apply capitalize block font-medium mb-1.5 2xl:mb-2 font-16 text-gray-600 font-16;
+    }
+
+    .menu{
+        @apply py-1 z-[999] border whitespace-nowrap bg-white shadow rounded-md min-w-[140px] 2xl:min-w-[180px]
+    }
+
+    .no-list {
+        @apply !bg-transparent !p-0 !cursor-default;
+    }
+
+    .list,.list-with-icon {
+        @apply !leading-[100%] mb-1 2xl:mb-2 last:mb-0 last:2xl:mb-0 rounded-lg !block capitalize !cursor-pointer w-full text-left !text-[11px] lg:!text-xs 2xl:!text-[15px] !text-gray-700 hover:bg-gray-100 !px-2 !py-2 2xl:!px-2.5 2xl:!py-2.5;
+    }
+    
+    .list-with-icon{
+        @apply flex items-center gap-2;
+    }
+    .list.active,
+    .list-with-icon.active {
+        @apply bg-gray-100;
+    }
+
+    .dropdown-shadow {
+        box-shadow: 0px 0px 4px rgba(0, 0, 0, 0.25);
+    }
+    .header-height{
+        @apply h-[64px]
+    }
+
+    .field-base{
+        @apply duration-100 font-16 w-full px-3 bg-white py-2 2xl:py-2.5 border rounded-lg focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-primary-dark/50
+    }
+
+    .field-base.danger{
+        @apply border-red-500
+    }
+}
+
+@layer utilities {
+    .box-section{
+        @apply bg-white rounded-xl p-4 2xl:p-6
+    }
+}
+
+.react-datepicker-wrapper{
+    @apply w-full
+}
+
+.react-select-container input,
+.react-select-container input:focus,
+.react-select-container input:focus-visible {
+    box-shadow: none !important;
+    border: none !important;
+    outline: none !important;
+}
+.dropdown-icon-container{
+    padding: 0!important;
+    border-radius: none !important;
+    transition: box-shadow 0.1s ease-in-out;
+}
+.react-select-container{
+    min-height: 33px !important;
+    box-shadow: none !important;
+    transition: none !important; 
+}
+
+.react-select-container.open {
+    outline: 2px solid #5d35cc7c !important;
+    outline-offset: 2px !important;
+    transition: all 50ms linear !important;
+}
+
+.react-select-container > div{
+    padding: 0 !important;
+}
+
+.react-select-container > div > div{
+    margin-left: 0 !important;
+}
+
+
+.list {
+    font-size: 11px !important;
+}
+
+.list.active,
+.list:hover {
+    @apply !bg-gray-200 !text-gray-800;
+}
+
+.triangle-up {
+    @apply  top-full w-0 h-0 border-l-[6px] border-r-[6px] border-t-[6px] border-l-transparent border-r-transparent border-t-black;
+}
+
+.triangle-down {
+    @apply  bottom-full w-0 h-0 border-l-[6px] border-r-[6px] border-b-[6px] border-l-transparent border-r-transparent border-t-black;
+}
