@@ -6,9 +6,6 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
 
   const request = useCallback(
     async (method, url, options = {}, onAction = {}) => {
-      
-      console.log(baseUrl);
-      
       const { onSuccess, onError } = onAction;
       setProcessing(true);
       setApiErrors({});
@@ -41,12 +38,12 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
           throw new Error(errorData.message || `Error: ${response.status}`);
         }
 
-        onSuccess?.(response);
-        return await response.json();
+        const responseData = await response.json();
+        onSuccess?.(responseData);
+        return responseData;
       } catch (error) {
         onError?.(error);
-        console.error("Request Error:", error.message);
-        return { error: error.message };
+        return { error: error?.message };
       } finally {
         setProcessing(false);
       }

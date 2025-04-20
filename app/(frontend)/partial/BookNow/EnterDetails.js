@@ -16,7 +16,10 @@ export default function EnterDetails({
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
   const { post } = useApi();
-  async function handleSubmit() {
+  
+  async function handleSubmit(e) {
+    e.preventDefault();
+
     setErrors([]);
     setLoading(true);
     let guest_email = data.guest_email;
@@ -25,20 +28,25 @@ export default function EnterDetails({
     }
 
     let newData = { ...data, guest_email };
-    try {
-      await post("/api/bookings/store", newData);
-      closeAnim();
-      setLoading(false);
-    } catch (error) {
-      setLoading(false);
-
-      if (error?.response?.data?.errors) {
-        setErrors(error.response.data.errors);
+    await post(
+      "/api/bookings/store",
+      { body: newData },
+      {
+        onSuccess: (res) => {
+          closeAnim();
+          setLoading(false);
+        },
+        onError: (error) => {
+          setLoading(false);
+          if (error?.response?.data?.errors) {
+            setErrors(error.response.data.errors);
+          }
+        },
       }
-    }
+    );
   }
   return (
-    <div className="py-6">
+    <form onSubmit={handleSubmit} className="py-6">
       <h2 className="font-30 text-dark2 capitalize mb-4">Enter Details</h2>
       <div className="grid grid-cols-1 gap-y-4 2xl:gap-y-6">
         <div>
@@ -88,6 +96,7 @@ export default function EnterDetails({
             onClick={() =>
               setData({ ...data, guest_email: [...data.guest_email, ""] })
             }
+            type="button"
             className="mt-2 flex gap-2 text-dark-green font-18"
           >
             {/* <PlusIcon /> */}
@@ -113,6 +122,7 @@ export default function EnterDetails({
       </div>
       <div className="flex items-center gap-4">
         <Button
+          type="button"
           onClick={() => setIsDetails(false)}
           className="mt-5 text-white px-10 hover:text-white font-medium hover:bg-dark-green hover:border-dark-green"
         >
@@ -120,12 +130,12 @@ export default function EnterDetails({
         </Button>
         <Button
           disabled={loading}
-          onClick={handleSubmit}
+          type="submit"
           className="mt-5 text-white px-10 hover:text-white font-medium hover:bg-dark-green hover:border-dark-green"
         >
           {loading ? "Processing" : "Schedule Event"}
         </Button>
       </div>
-    </div>
+    </form>
   );
 }

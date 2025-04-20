@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Header from "./partial/Header";
 import SidebarMenu from "./partial/SidebarMenu/SidebarMenu";
-import PrivateLayout from "@/components/PrivateLayout";
+// import PrivateLayout from "@/components/PrivateLayout";
 
 const sidebarMenu = [
   { title: "Dashboard", icon: "dashboard", link: "/admin/dashboard" },
