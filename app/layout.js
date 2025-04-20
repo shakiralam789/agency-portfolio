@@ -1,4 +1,4 @@
-import { Roboto } from "next/font/google";
+import { Open_Sans } from "next/font/google";
 
 import StoreProvider from "@/src/store/Provider";
 import { NextIntlClientProvider } from "next-intl";
@@ -9,8 +9,9 @@ import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
 import PreloaderLayout from "@/components/Preloader";
 
-const roboto = Roboto({
-  weight: ["300", "400", "500", "700"],
+
+const openSans = Open_Sans({
+  weight: ["300", "400", "500", "600", "700"],
   subsets: ["latin"],
   display: "swap",
 });
@@ -33,7 +34,7 @@ export default async function RootLayout({ children }) {
   const messages = await getMessages();
   return (
     <html lang={locale}>
-      <body className={roboto.className + " bg-body-color"}>
+      <body className={openSans.className + " bg-body-color"}>
         {/* <PreloaderLayout> */}
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>

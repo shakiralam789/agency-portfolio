@@ -1,5 +1,6 @@
 "use client";
 import Button from "@/components/form/Button";
+import OutlinedHeading from "@/components/OutlinedHeading";
 
 export default function Banner() {
   return (
@@ -14,15 +15,7 @@ export default function Banner() {
           </span>
         </div>
 
-        <h1
-          className="font-bold md:mb-2 font-90 text-transparent"
-          style={{
-            WebkitTextStroke: "1px #333",
-            letterSpacing: "0em",
-          }}
-        >
-          User-centered designs
-        </h1>
+        <OutlinedHeading className="font-90">User-centered designs</OutlinedHeading>
 
         <h2 className="font-bold text-primary-dark mb-4 md:mb-6 font-90 leading-tight tracking-tight">
           that drive Results

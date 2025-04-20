@@ -161,3 +161,10 @@ swiper-button-next,
 .swiper-button-disabled{
     @apply opacity-50 pointer-events-none;
 }
+
+/* .outlined-text {
+    color: white;
+    -webkit-text-stroke: 2px #333;
+    text-stroke: 2px #333;
+    text-fill-color: white;
+  } */
