@@ -16,10 +16,8 @@ export default function Banner() {
   const taglineRef = useRef(null);
 
   useEffect(() => {
-    // Initialize GSAP animations
     const tl = gsap.timeline();
 
-    // Animate hero elements
     tl.from(taglineRef.current, {
       y: -20,
       opacity: 0,
@@ -94,7 +92,6 @@ export default function Banner() {
     });
 
     return () => {
-      // Clean up animations
       tl.kill();
     };
   }, []);
@@ -104,7 +101,6 @@ export default function Banner() {
       ref={heroRef}
       className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
     >
-      {/* Decorative blobs */}
       <div
         ref={blob1Ref}
         className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl"

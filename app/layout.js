@@ -38,7 +38,7 @@ export default async function RootLayout({ children }) {
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>
             <NextTopLoader
-              color="#5E35CC"
+              color="#22c55e"
               height={3}
               speed={500}
               showSpinner={false}

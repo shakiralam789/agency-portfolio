@@ -6,6 +6,9 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
 
   const request = useCallback(
     async (method, url, options = {}, onAction = {}) => {
+      
+      console.log(baseUrl);
+      
       const { onSuccess, onError } = onAction;
       setProcessing(true);
       setApiErrors({});

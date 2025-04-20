@@ -1,6 +1,6 @@
 "use client";
 // components/ContactForm.jsx
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import Image from "next/image";
 import P from "./P";
 import Subtitle from "./Subtitle";
@@ -13,8 +13,14 @@ import ErrorMsg from "@/components/ErrorMsg";
 import { Controller } from "react-hook-form";
 import CustomSelect from "@/components/form/CustomSelect";
 import TextArea from "@/components/form/TextArea";
+import DiscoveryCall from "./BookNow/DiscoveryCall";
+import gsap from "gsap";
 
 export default function ContactForm() {
+
+  const [isBookNowOpen, setIsBookNowOpen] = useState(false);
+  const bookNowRef = useRef(null);
+
   const { register, control, post, put, errors, handleSubmit } = useForm({
     name: "",
     email: "",
@@ -27,6 +33,42 @@ export default function ContactForm() {
   function onSubmit(data) {
     console.log(data);
   }
+
+  function openBookNow() {
+    setIsBookNowOpen(true);
+  }
+  function closeAnim() {
+    document.body.style.overflow = "auto";
+    if (bookNowRef.current) {
+      gsap.to(bookNowRef.current, {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power4.out",
+        onComplete: () => {
+          setIsBookNowOpen(false);
+        },
+      });
+    }
+  }
+
+  function openAnim() {
+    document.body.style.overflow = "hidden";
+    if (bookNowRef.current) {
+      gsap.fromTo(
+        bookNowRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, ease: "power4.out" }
+      );
+    }
+  }
+
+  useEffect(() => {
+    if (isBookNowOpen) {
+      openAnim();
+    } else {
+      closeAnim();
+    }
+  }, [isBookNowOpen]);
 
   return (
     <section className="py-16">
@@ -58,7 +100,7 @@ export default function ContactForm() {
           </div>
 
           {/* Right side - Form */}
-          <div className="w-full md:w-5/12 2xl:w-1/2 mt-6" >
+          <div className="w-full md:w-5/12 2xl:w-1/2 mt-6">
             <div className="relative rounded-3xl shadow-sm p-4 2xl:p-6">
               <Image
                 className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"
@@ -160,7 +202,7 @@ export default function ContactForm() {
                   <div className="col-span-2 flex flex-wrap items-center gap-4 mt-2">
                     <Button type="submit">Submit form</Button>
                     <span className="text-gray-500">Or,</span>
-                    <Button type="button">Book a direct call</Button>
+                    <Button onClick={openBookNow} type="button">Book a direct call</Button>
                   </div>
                 </div>
               </form>
@@ -168,6 +210,13 @@ export default function ContactForm() {
           </div>
         </div>
       </div>
+      {isBookNowOpen && (
+        <DiscoveryCall
+          ref={bookNowRef}
+          isBookNowOpen={isBookNowOpen}
+          closeAnim={closeAnim}
+        ></DiscoveryCall>
+      )}
     </section>
   );
 }

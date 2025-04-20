@@ -4,14 +4,14 @@ import Image from "next/image";
 
 const ServiceCard = ({ title, imageSrc, alt }) => {
   return (
-    <div className="bg-black bg-opacity-5 rounded-xl p-8 flex flex-col items-center hover:shadow-lg">
-      <div className="mb-6 h-36 flex items-center justify-center">
+    <div className="bg-black bg-opacity-5 rounded-xl p-8 flex flex-col justify-between items-center hover:shadow-lg">
+      <div className="mb-6 h-36">
         <Image
           src={imageSrc}
           alt={alt}
           width={180}
           height={180}
-          className="object-contain"
+          className="w-11/12 mx-auto"
         />
       </div>
       <h3 className="text-primary-dark font-18 font-semibold text-center">{title}</h3>
@@ -30,19 +30,19 @@ const ServicesSection = () => {
     {
       id: 2,
       title: "Web Design & Development",
-      imageSrc: "/images/ui-ux.png",
+      imageSrc: "/images/web-design.png",
       alt: "Web Design illustration",
     },
     {
       id: 3,
       title: "App Development",
-      imageSrc: "/images/ui-ux.png",
+      imageSrc: "/images/app-development.png",
       alt: "App Development illustration",
     },
     {
       id: 4,
       title: "Cloud & SaaS Design + Development",
-      imageSrc: "/images/ui-ux.png",
+      imageSrc: "/images/cloud-sass.png",
       alt: "Cloud and SaaS illustration",
     },
   ];
@@ -58,7 +58,7 @@ const ServicesSection = () => {
       {/* Background gradient effect */}
 
       <div className="container">
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between mb-12">
+        <div className="flex flex-col md:flex-row items-end md:justify-between mb-12">
           <div className="lg:w-1/2">
             <p className="text-green-default font-20 font-medium mb-2">OUR SERVICES</p>
             <h2 className="font-48 text-primary-dark font-bold">
