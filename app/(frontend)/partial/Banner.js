@@ -4,7 +4,7 @@ import OutlinedHeading from "@/components/OutlinedHeading";
 
 export default function Banner() {
   return (
-    <section className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50">
+    <section id="home" className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50">
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl" />
       <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-pink-200/30 to-yellow-200/30 blur-3xl" />
 
@@ -26,8 +26,8 @@ export default function Banner() {
           and grow your business
         </p>
 
-        <Button>
-          <span>Contact us</span>
+        <Button href="#contact">
+          Contact us
         </Button>
       </div>
     </section>

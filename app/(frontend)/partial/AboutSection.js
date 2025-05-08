@@ -5,7 +5,7 @@ import P from "./P";
 
 export default function AboutSection() {
   return (
-    <section className="py-16 md:py-24 bg-[#fcfaf8] overflow-hidden">
+    <section id="about" className="py-16 md:py-24 bg-[#fcfaf8] overflow-hidden">
       <div className="container">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-8">
           {/* Text Content */}
@@ -23,7 +23,7 @@ export default function AboutSection() {
               Development, we help brands connect with their audience and
               achieve their goals.
             </P>
-            <Button href="/contact">Contact us</Button>
+            <Button href="#contact">Contact us</Button>
           </div>
 
           {/* Illustration */}

@@ -16,11 +16,11 @@ const Navbar = () => {
   };
 
   const navItems = [
-    { label: "Home", path: "/" },
-    { label: "About Us", path: "/about" },
-    { label: "Services", path: "/services" },
-    { label: "Technologies", path: "/technologies" },
-    { label: "Our Courses", path: "/courses" },
+    { label: "Home", section: "home" },
+    { label: "About Us", section: "about" },
+    { label: "Services", section: "services" },
+    { label: "Technologies", section: "technologies" },
+    { label: "Our Courses", section: "courses" },
   ];
 
   return (
@@ -34,19 +34,19 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 font-16">
           {navItems.map((item) => (
-            <Link
-              key={item.path}
-              href={item.path}
+            <a
+              key={item.section}
+              href={'#'+item.section}
               className={`${
-                isActive(item.path)
+                isActive(item.section)
                   ? "text-green-default font-medium"
                   : "text-gray-700"
               } hover:text-gray-900`}
             >
               {item.label}
-            </Link>
+            </a>
           ))}
-          <Button href={"/contact"}>Contact us</Button>
+          <Button href={"#contact"}>Contact us</Button>
         </div>
 
         {/* Mobile menu button */}
@@ -89,10 +89,10 @@ const Navbar = () => {
           <div className="flex flex-col space-y-3 px-6 py-4">
             {navItems.map((item) => (
               <Link
-                key={item.path}
-                href={item.path}
+                key={item.section}
+                href={'#'+item.section}
                 className={`${
-                  isActive(item.path)
+                  isActive(item.section)
                     ? "text-green-600 font-medium"
                     : "text-gray-700"
                 } hover:text-gray-900 py-2 font-16`}
@@ -101,7 +101,7 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <Button onClick={() => setIsOpen(false)} href={"/contact"}>
+            <Button href={"#contact"}>
               Contact us
             </Button>
           </div>

@@ -56,6 +56,7 @@ export default function TestimonialSlider() {
 
   return (
     <section
+      id="testimonials"
       className="py-16 overflow-hidden bg-no-repeat bg-cover bg-center"
       style={{
         backgroundImage: 'url("/images/colorFull-bg.jpg")',

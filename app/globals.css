@@ -8,6 +8,10 @@
     padding: 0 15px;
 }
 
+html{
+    scroll-behavior: smooth;
+}
+
 @layer components {
 
     p {
@@ -26,7 +30,7 @@
     }
 
     .font-48 {
-    font-size: clamp(1.75rem, 3vw + 1rem, 3rem); /* 28px to 48px */
+    font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem); /* 28px to 48px */
     }
 
     .font-26 {

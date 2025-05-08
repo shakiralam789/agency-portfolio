@@ -126,7 +126,7 @@ const FooterSection = () => {
                 </li>
                 <li>
                   <Link
-                    href="/contact-us"
+                    href="#contact"
                     className="text-gray-600 hover:text-gray-800 text-sm"
                   >
                     Contact us

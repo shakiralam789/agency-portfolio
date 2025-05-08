@@ -49,7 +49,8 @@ const ServicesSection = () => {
 
   return (
     <section
-      className="relative py-16 overflow-hidden bg-no-repeat bg-cover bg-center"
+      id="services"
+      className="relative py-16 md:py-24 overflow-hidden bg-no-repeat bg-cover bg-center"
       style={{ background: "url('/images/service-bg.jpg')" }}
     >
         <div>
@@ -67,7 +68,7 @@ const ServicesSection = () => {
           </div>
 
           <div className="mt-6 md:mt-0">
-            <Button href="/contact">Contact us</Button>
+            <Button href="#contact">Contact us</Button>
           </div>
         </div>
 

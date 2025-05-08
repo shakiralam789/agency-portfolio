@@ -71,7 +71,7 @@ export default function ContactForm() {
   }, [isBookNowOpen]);
 
   return (
-    <section className="py-16">
+    <section id="contact" className="py-16 md:py-24">
       <div className="container">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Text and Image */}

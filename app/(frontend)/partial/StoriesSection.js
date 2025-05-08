@@ -7,7 +7,7 @@ export default function StatsSection() {
     ];
   
     return (
-      <section className="py-20 px-4 text-center relative">
+      <section id="stories" className="py-20 px-4 text-center relative">
         <div className="container">
           <h2 className="font-48 font-semibold text-primary-dark mb-12">
             Our Stories
