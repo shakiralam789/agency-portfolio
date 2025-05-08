@@ -1,11 +1,14 @@
 // components/FooterSection.jsx
 import React from "react";
 import Link from "next/link";
-import Image from "next/image";
 import Logo from "@/components/Logo";
+import FooterLottie from "./lotties/Footer";
 const FooterSection = () => {
   return (
-    <footer className="bg-white py-12 px-4 md:px-8">
+    <footer id="footer" className="relative py-12 px-4 md:px-8">
+      <div className="absolute inset-0 -z-10">
+        <FooterLottie />
+      </div>
       <div className="container">
         {/* Top section with logo and tagline */}
 

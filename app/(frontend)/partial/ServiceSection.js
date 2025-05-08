@@ -1,6 +1,7 @@
 // components/ServicesSection.jsx
 import Button from "@/components/form/Button";
 import Image from "next/image";
+import ServiceLottie from "./lotties/Service";
 
 const ServiceCard = ({ title, imageSrc, alt }) => {
   return (
@@ -14,7 +15,9 @@ const ServiceCard = ({ title, imageSrc, alt }) => {
           className="w-11/12 mx-auto"
         />
       </div>
-      <h3 className="text-primary-dark font-18 font-semibold text-center">{title}</h3>
+      <h3 className="text-primary-dark font-18 font-semibold text-center">
+        {title}
+      </h3>
     </div>
   );
 };
@@ -48,20 +51,18 @@ const ServicesSection = () => {
   ];
 
   return (
-    <section
-      id="services"
-      className="relative py-16 md:py-24 overflow-hidden bg-no-repeat bg-cover bg-center"
-      style={{ background: "url('/images/service-bg.jpg')" }}
-    >
-        <div>
-            
-        </div>
+    <section id="services" className="relative py-16 md:py-24 overflow-hidden">
+      <div className="absolute inset-0 -z-10">
+        <ServiceLottie />
+      </div>
       {/* Background gradient effect */}
 
       <div className="container">
         <div className="flex flex-col md:flex-row items-end md:justify-between mb-12">
           <div className="lg:w-1/2">
-            <p className="text-green-default font-20 font-medium mb-2">OUR SERVICES</p>
+            <p className="text-green-default font-20 font-medium mb-2">
+              OUR SERVICES
+            </p>
             <h2 className="font-48 text-primary-dark font-bold">
               Our Featured Digital Services
             </h2>

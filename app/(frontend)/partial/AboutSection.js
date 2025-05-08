@@ -2,6 +2,7 @@ import Button from "@/components/form/Button";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
 import P from "./P";
+import AboutLottie from "./lotties/About";
 
 export default function AboutSection() {
   return (
@@ -26,8 +27,7 @@ export default function AboutSection() {
             <Button href="#contact">Contact us</Button>
           </div>
 
-          {/* Illustration */}
-          <div className="w-full lg:w-6/12 xl:w-6/12"></div>
+          <AboutLottie className="w-full lg:w-6/12 xl:w-6/12" />
         </div>
       </div>
     </section>
