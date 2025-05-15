@@ -1,4 +1,4 @@
-import StoriesLottie from "./lotties/Stories";
+// import StoriesLottie from "./lotties/Stories";
 
 export default function StatsSection() {
   const stats = [
@@ -10,11 +10,11 @@ export default function StatsSection() {
 
   return (
     <section id="stories" className="py-20 px-4 text-center relative">
-      <div className="absolute inset-0 -z-10">
+      {/* <div className="absolute inset-0 -z-10">
         <StoriesLottie />
-      </div>
+      </div> */}
       <div className="container">
-        <h2 className="font-48 font-semibold text-primary-dark mb-12">
+        <h2 className="font-48 font-bold text-primary-dark mb-12">
           Our Stories
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">

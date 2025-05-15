@@ -1,69 +1,40 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
-import Lottie from "lottie-react";
+import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import aboutSectionLottie from "@/lotties/about.json";
 import cn from "@/utilities/cn";
 
+const aboutVideo = "/videos/about.mp4";
 gsap.registerPlugin(ScrollTrigger);
 
-export default function AboutLottie({ className }) {
-  const lottieRef = useRef();
-  const [mounted, setMounted] = useState(false);
+export default function AboutAnim({ className = "" }) {
+  const videoRef = useRef();
 
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted || !lottieRef.current) return;
-
-    const anim = lottieRef.current;
-    anim.stop();
-
-    let isPlaying = false;
+    if (!videoRef.current) return;
 
     const trigger = ScrollTrigger.create({
       trigger: "#about",
       start: "top 80%",
-      onEnter: () => {
-        if (!isPlaying) {
-          isPlaying = true;
-          anim.stop();
-          anim.play();
-        }
-      },
-      onEnterBack: () => {
-        if (!isPlaying) {
-          isPlaying = true;
-          anim.stop();
-          anim.play();
-        }
-      },
-      onLeave: () => {
-        isPlaying = false;
-      },
-      onLeaveBack: () => {
-        isPlaying = false;
-      },
+      end: "bottom top",
+      onEnter: () => videoRef.current.play(),
+      onEnterBack: () => videoRef.current.play(),
+      onLeave: () => videoRef.current.pause(),
+      onLeaveBack: () => videoRef.current.pause(),
     });
 
     return () => {
       trigger.kill();
     };
-  }, [mounted]);
-
-  if (!mounted) return null;
+  }, []);
 
   return (
-    <div className={cn("w-full h-full", className)} style={{ minHeight: 300 }}>
-      <Lottie
-        lottieRef={lottieRef}
-        animationData={aboutSectionLottie}
-        loop={false}
-        autoplay={false}
-      />
-    </div>
+    <video
+      ref={videoRef}
+      src={aboutVideo}
+      muted
+      playsInline
+      className={cn("w-full h-auto -mb-1", className)}
+    />
   );
 }

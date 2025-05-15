@@ -13,7 +13,7 @@ import ChevronLeft from "@/components/icons/ChevronLeft";
 import ChevronRight from "@/components/icons/ChevronRight";
 import P from "./P";
 import Quote from "@/components/icons/Quote";
-import MapLottie from "./lotties/Map";
+// import MapLottie from "./lotties/Map";
 
 const testimonials = [
   {
@@ -56,11 +56,19 @@ export default function TestimonialSlider() {
   const nextRef = useRef(null);
 
   return (
-    <section id="testimonials" className="py-16 overflow-hidden">
-      <div className="container mx-auto px-4 pt-4 max-w-6xl relative z-10">
-        <div className="absolute inset-0 -z-10">
+    <section id="testimonials" className="overflow-hidden">
+      <div className="container mx-auto px-4 !py-16 2xl:!py-20 z-10 relative">
+        {/* <div className="absolute inset-0 -z-10">
           <MapLottie />
-        </div>
+        </div> */}
+        <Image
+          src={"/images/map.png"}
+          alt="Service Background"
+          width={1920}
+          height={1080}
+          className="absolute top-0 left-0 w-full"
+        />
+
         <div className="mb-12 relative flex flex-wrap justify-between items-end">
           <div>
             <Subtitle className="mb-2">TESTIMONIALS</Subtitle>

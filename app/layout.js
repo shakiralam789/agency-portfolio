@@ -7,8 +7,7 @@ import { getLocale, getMessages } from "next-intl/server";
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
 import NextTopLoader from "nextjs-toploader";
-import PreloaderLayout from "@/components/Preloader";
-
+import LoadingSpinner from "@/components/animation/LoadingSpin";
 
 const openSans = Open_Sans({
   weight: ["300", "400", "500", "600", "700"],
@@ -35,6 +34,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={locale}>
       <body className={openSans.className + " bg-body-color"}>
+        <LoadingSpinner />
         {/* <PreloaderLayout> */}
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>

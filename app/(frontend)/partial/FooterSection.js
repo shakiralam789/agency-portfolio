@@ -2,13 +2,14 @@
 import React from "react";
 import Link from "next/link";
 import Logo from "@/components/Logo";
-import FooterLottie from "./lotties/Footer";
+import Image from "next/image";
+// import FooterLottie from "./lotties/Footer";
 const FooterSection = () => {
   return (
     <footer id="footer" className="relative py-12 px-4 md:px-8">
-      <div className="absolute inset-0 -z-10">
+      {/* <div className="absolute inset-0 -z-10">
         <FooterLottie />
-      </div>
+      </div> */}
       <div className="container">
         {/* Top section with logo and tagline */}
 
@@ -17,7 +18,12 @@ const FooterSection = () => {
           <div className="text-center sm:text-left col-span-12 lg:col-span-5">
             <div className="mb-10">
               <Link href="/" className="inline-block mb-3">
-                <Logo />
+                <Image
+                  src="/images/logo.png"
+                  width={100}
+                  height={100}
+                  alt="logo"
+                />
               </Link>
               <p className="def-para sm:max-w-md">
                 An AI-powered support ecosystem built to give your users an

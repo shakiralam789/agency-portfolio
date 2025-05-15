@@ -27,16 +27,19 @@ const Navbar = () => {
     <nav className="h-header-height flex items-center fixed top-0 left-0 z-40 w-full bg-white shadow-sm">
       {/* Logo */}
       <div className="container py-3 flex items-center justify-between">
-        <div className="flex items-center">
+        <Link
+          href="/"
+          className="cursor-pointer flex items-center h-header-height overflow-hidden"
+        >
           <Logo />
-        </div>
+        </Link>
 
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 font-16">
           {navItems.map((item) => (
             <a
               key={item.section}
-              href={'#'+item.section}
+              href={"#" + item.section}
               className={`${
                 isActive(item.section)
                   ? "text-green-default font-medium"
@@ -90,7 +93,7 @@ const Navbar = () => {
             {navItems.map((item) => (
               <Link
                 key={item.section}
-                href={'#'+item.section}
+                href={"#" + item.section}
                 className={`${
                   isActive(item.section)
                     ? "text-green-600 font-medium"
@@ -101,9 +104,7 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <Button href={"#contact"}>
-              Contact us
-            </Button>
+            <Button href={"#contact"}>Contact us</Button>
           </div>
         </div>
       )}

@@ -1,5 +1,5 @@
-import Image from "next/image";
+const logo = "/images/gif/logo.gif";
 
 export default function Logo() {
-  return <Image src="/images/logo.png" width={100} height={100} alt="logo" />;
+  return <img className="w-44" src={logo} width={300} h={300} alt="logo" />;
 }
