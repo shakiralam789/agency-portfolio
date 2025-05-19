@@ -1,7 +1,6 @@
 import Label from "@/components/form/Label";
 import TextArea from "@/components/form/TextArea";
 import React, { useState } from "react";
-// import PlusIcon from "@/app/components/icon/plusIcon";
 import Button from "@/components/form/Button";
 import TextField from "@/components/form/TextField";
 import useApi from "@/hook/useApi";
@@ -15,11 +14,11 @@ export default function EnterDetails({
 }) {
   const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
+
   const { post } = useApi();
-  
+
   async function handleSubmit(e) {
     e.preventDefault();
-
     setErrors([]);
     setLoading(true);
     let guest_email = data.guest_email;
@@ -89,19 +88,19 @@ export default function EnterDetails({
             ))}
           </div>
 
-          <p className="font-18 text-para mt-2">
+          <p className="font-16 text-para mt-2">
             Notify up to 10 Additional Guests of the Scheduled event.
           </p>
-          <button
+          <Button
             onClick={() =>
               setData({ ...data, guest_email: [...data.guest_email, ""] })
             }
             type="button"
-            className="mt-2 flex gap-2 text-dark-green font-18"
+            className="mt-2 text-white bg-green-default hover:bg-green-600"
           >
             {/* <PlusIcon /> */}
             Add Guest
-          </button>
+          </Button>
         </div>
         <div>
           <Label>

@@ -34,7 +34,7 @@ export default async function RootLayout({ children }) {
   return (
     <html lang={locale}>
       <body className={openSans.className + " bg-body-color"}>
-        <LoadingSpinner />
+        {/* <LoadingSpinner /> */}
         {/* <PreloaderLayout> */}
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>

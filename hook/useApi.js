@@ -42,8 +42,8 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
         onSuccess?.(responseData);
         return responseData;
       } catch (error) {
-        onError?.(error);
-        return { error: error?.message };
+        // onError?.(error);
+        // return { error: error?.message };
       } finally {
         setProcessing(false);
       }
