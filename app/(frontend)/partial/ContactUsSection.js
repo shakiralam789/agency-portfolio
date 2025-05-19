@@ -15,10 +15,16 @@ import CustomSelect from "@/components/form/CustomSelect";
 import TextArea from "@/components/form/TextArea";
 import DiscoveryCall from "./BookNow/DiscoveryCall";
 import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 export default function ContactForm() {
   const [isBookNowOpen, setIsBookNowOpen] = useState(false);
   const bookNowRef = useRef(null);
+  
+  // Add refs for animation
+  const sectionRef = useRef(null);
+  const leftContentRef = useRef(null);
+  const rightContentRef = useRef(null);
 
   const { register, control, post, put, errors, handleSubmit } = useForm({
     name: "",
@@ -36,6 +42,7 @@ export default function ContactForm() {
   function openBookNow() {
     setIsBookNowOpen(true);
   }
+  
   function closeAnim() {
     document.body.style.overflow = "auto";
     if (bookNowRef.current) {
@@ -69,12 +76,63 @@ export default function ContactForm() {
     }
   }, [isBookNowOpen]);
 
+  // Add scroll animation effect
+  useEffect(() => {
+    // Register the ScrollTrigger plugin
+    if (typeof window !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // Set initial state - both parts are invisible
+    gsap.set(leftContentRef.current, { 
+      opacity: 0,
+      x: -50
+    });
+    
+    gsap.set(rightContentRef.current, { 
+      opacity: 0,
+      x: 50
+    });
+
+    // Create the scroll-triggered animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 50%", // Animation starts when the top of the section hits 75% from the top of the viewport
+        end: "bottom bottom",
+        toggleActions: "play none none none"
+      }
+    });
+
+    // Animate both parts fading in
+    tl.to(leftContentRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    tl.to(rightContentRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1,
+      ease: "power3.out"
+    }, "-=0.7"); // Start slightly before the first animation ends for a staggered effect
+
+    // Cleanup function
+    return () => {
+      if (typeof window !== "undefined" && ScrollTrigger.getAll().length) {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
+    };
+  }, []);
+
   return (
-    <section id="contact" className="py-16 md:py-24">
+    <section ref={sectionRef} id="contact" className="py-16 md:py-24">
       <div className="container">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Text and Image */}
-          <div className="text-center md:text-left w-full md:w-7/12 2xl:w-1/2 mb-8 md:mb-0">
+          <div ref={leftContentRef} className="text-center md:text-left w-full md:w-7/12 2xl:w-1/2 mb-8 md:mb-0">
             <Title className="mb-4">
               Have a project idea in mind?
               <br />
@@ -99,7 +157,7 @@ export default function ContactForm() {
           </div>
 
           {/* Right side - Form */}
-          <div className="w-full md:w-5/12 2xl:w-1/2 mt-6">
+          <div ref={rightContentRef} className="w-full md:w-5/12 2xl:w-1/2 mt-6">
             <div className="relative rounded-3xl shadow-sm p-4 2xl:p-6">
               <Image
                 className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"

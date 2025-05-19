@@ -1,3 +1,7 @@
+"use client";
+import { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Button from "@/components/form/Button";
 import Title from "./Title";
 import Subtitle from "./Subtitle";
@@ -7,12 +11,67 @@ import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 export default function AboutSection() {
+  // Create refs for the elements we want to animate
+  const sectionRef = useRef(null);
+  const textContentRef = useRef(null);
+  const animationRef = useRef(null);
+
+  useEffect(() => {
+    // Register the ScrollTrigger plugin
+    if (typeof window !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    // Set initial state - both parts are invisible
+    gsap.set(textContentRef.current, { 
+      opacity: 0,
+      x: -50
+    });
+    
+    gsap.set(animationRef.current, { 
+      opacity: 0,
+      x: 50
+    });
+
+    // Create the scroll-triggered animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 75%", // Animation starts when the top of the section hits 75% from the top of the viewport
+        end: "bottom bottom",
+        toggleActions: "play none none none"
+      }
+    });
+
+    // Animate both parts fading in
+    tl.to(textContentRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1,
+      ease: "power3.out"
+    });
+
+    tl.to(animationRef.current, {
+      opacity: 1,
+      x: 0,
+      duration: 1,
+      ease: "power3.out"
+    }, "-=0.7"); // Start slightly before the first animation ends for a staggered effect
+
+    // Cleanup function
+    return () => {
+      if (typeof window !== "undefined" && ScrollTrigger.getAll().length) {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
+    };
+  }, []);
+
   return (
-    <section id="about" className="py-16 md:py-24 bg-[#fcfaf8] overflow-hidden">
+    <section ref={sectionRef} id="about" className="py-16 md:py-24 bg-[#fcfaf8] overflow-hidden">
       <div className="container">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           {/* Text Content */}
-          <div className="w-full lg:w-1/2">
+          <div ref={textContentRef} className="w-full lg:w-1/2">
             <Subtitle>Why us</Subtitle>
             <Title className="mt-3 mb-8">
               Reason Behind Choosing
@@ -64,7 +123,7 @@ export default function AboutSection() {
 
             <Button href="#contact">Contact us</Button>
           </div>
-          <div className="w-full lg:w-1/2 overflow-hidden">
+          <div ref={animationRef} className="w-full lg:w-1/2 overflow-hidden">
             <AboutAnim />
           </div>
         </div>
