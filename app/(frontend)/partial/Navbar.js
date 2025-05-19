@@ -31,7 +31,7 @@ const Navbar = () => {
           href="/"
           className="cursor-pointer flex items-center h-header-height overflow-hidden"
         >
-          <Logo />
+          <Logo className="-ml-9"/>
         </Link>
 
         {/* Desktop Navigation */}
