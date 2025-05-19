@@ -1,5 +1,6 @@
 import React from "react";
-import Navbar from "../admin/partial/Navbar";
+import Navbar from "./partial/Navbar";
+import FooterSection from "./partial/FooterSection";
 
 export default function layout({ children }) {
   return (
@@ -8,7 +9,7 @@ export default function layout({ children }) {
       <main className="w-full flex-1 flex flex-wrap">
         <div className="w-full">{children}</div>
       </main>
-      {/* <Footer /> */}
+      <FooterSection />
     </div>
   );
 }

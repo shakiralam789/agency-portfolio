@@ -17,7 +17,6 @@ import DiscoveryCall from "./BookNow/DiscoveryCall";
 import gsap from "gsap";
 
 export default function ContactForm() {
-
   const [isBookNowOpen, setIsBookNowOpen] = useState(false);
   const bookNowRef = useRef(null);
 
@@ -110,7 +109,7 @@ export default function ContactForm() {
                 height={500}
               />
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 2xl:gap-y-8 gap-x-4 2xl:gap-x-6">
                   {/* Full Name */}
                   <div className="col-span-2">
                     <Label>Full Name</Label>
@@ -168,23 +167,13 @@ export default function ContactForm() {
 
                   <div>
                     <Label>project budget</Label>
-                    <Controller
-                      name="project_budget"
-                      control={control}
-                      render={({ field }) => (
-                        <>
-                          <CustomSelect
-                            {...field}
-                            options={[
-                              { label: "option 1", value: "1" },
-                              { label: "Option 2", value: "2" },
-                            ]}
-                            placeholder="Select status"
-                          />
-                        </>
-                      )}
+                    <TextField
+                      {...register("project_budget", {
+                        required: "project budget is required",
+                      })}
+                      placeholder={"Enter project budget"}
                     />
-                    <ErrorMsg message={errors?.status?.message} />
+                    <ErrorMsg message={errors?.project_budget?.message} />
                   </div>
 
                   {/* Project Details */}
@@ -199,10 +188,12 @@ export default function ContactForm() {
                   </div>
 
                   {/* Submit Buttons */}
-                  <div className="col-span-2 flex flex-wrap items-center gap-4 mt-2">
+                  <div className="col-span-2 flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
                     <Button type="submit">Submit form</Button>
                     <span className="text-gray-500">Or,</span>
-                    <Button onClick={openBookNow} type="button">Book a direct call</Button>
+                    <Button onClick={openBookNow} type="button">
+                      Book a direct call
+                    </Button>
                   </div>
                 </div>
               </form>

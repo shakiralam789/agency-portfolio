@@ -229,7 +229,7 @@ const FooterSection = () => {
         {/* Copyright */}
         <div className="mt-10">
           <p className="text-center sm:text-left text-gray-600 text-sm">
-            <span className="text-green-500 font-16">Nuehva Medium</span> © 2024
+            <span className="text-green-500 font-16">Nuehva Medium</span> © 2025
             - All rights reserved.
           </p>
         </div>

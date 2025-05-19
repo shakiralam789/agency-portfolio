@@ -11,7 +11,7 @@ const CustomControl = ({ children, ...props }) => {
   return (
     <components.Control
       {...props}
-      className={`${selectProps.menuIsOpen ? "open" : ""} react-select-container !cursor-pointer field-base !rounded-lg !border-gray-200`}
+      className={`${selectProps.menuIsOpen ? "open" : ""} react-select-container !cursor-pointer field-base !rounded-lg !border-none`}
     >
       {children}
     </components.Control>

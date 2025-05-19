@@ -1,7 +1,6 @@
 import AboutSection from "./partial/AboutSection";
 import Banner from "./partial/Banner";
 import ContactForm from "./partial/ContactUsSection";
-import FooterSection from "./partial/FooterSection";
 import ServicesSection from "./partial/ServiceSection";
 import StoriesStatsSection from "./partial/StoriesSection";
 import TestimonialSlider from "./partial/TestimonialSlider";
@@ -15,7 +14,6 @@ export default function Home() {
       <StoriesStatsSection />
       <TestimonialSlider />
       <ContactForm />
-      <FooterSection />
     </>
   );
 }

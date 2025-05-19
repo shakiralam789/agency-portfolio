@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import Button from "@/components/form/Button";
 import Image from "next/image";
 import gsap from "gsap";
@@ -7,7 +7,7 @@ import { ScrollTrigger } from "gsap/dist/ScrollTrigger";
 
 const ServiceCard = ({ title, imageSrc, alt }) => {
   return (
-    <div className="service-card bg-black bg-opacity-5 rounded-xl p-8 flex flex-col justify-between items-center hover:shadow-lg min-w-[280px] mx-3 h-[350px]">
+    <div className="service-card bg-black bg-opacity-5 rounded-xl p-8 flex flex-col justify-between items-center hover:shadow-lg transition-shadow min-w-[280px] mx-3">
       <div className="mb-6 h-36 flex items-center justify-center">
         <Image
           src={imageSrc}
@@ -29,6 +29,7 @@ const ServicesSection = () => {
   const cardsContainerRef = useRef(null);
   const triggerRef = useRef(null);
   const headerRef = useRef(null);
+  const [cardHeight, setCardHeight] = useState(350);
 
   const services = [
     {
@@ -58,25 +59,25 @@ const ServicesSection = () => {
     {
       id: 5,
       title: "AI Model Train & Machine Learning Integration",
-      imageSrc: "/images/cloud-sass.png",
+      imageSrc: "/images/ai-model.png",
       alt: "AI Model",
     },
     {
       id: 6,
       title: "Enterprise Software Solutions",
-      imageSrc: "/images/cloud-sass.png",
+      imageSrc: "/images/enterprise.png",
       alt: "Cloud and SaaS illustration",
     },
     {
       id: 7,
       title: "UI Animation (2D+3D)",
-      imageSrc: "/images/cloud-sass.png",
+      imageSrc: "/images/ui-animation.png",
       alt: "UI Animation (2D+3D)",
     },
     {
       id: 8,
       title: "QA Testing & Maintenance",
-      imageSrc: "/images/cloud-sass.png",
+      imageSrc: "/images/qa.png",
       alt: "QA Testing & Maintenance",
     },
   ];
@@ -86,12 +87,39 @@ const ServicesSection = () => {
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
 
-      const nextSection =
-        document.querySelector("#services").nextElementSibling;
+      const nextSection = document.querySelector("#services")?.nextElementSibling;
+
+      // Function to calculate and set the same height for all cards
+      const setUniformCardHeight = () => {
+        const cards = document.querySelectorAll(".service-card");
+        if (cards.length === 0) return;
+
+        // Reset any previously set height to get natural heights
+        cards.forEach(card => {
+          card.style.height = "auto";
+        });
+
+        // Wait a moment for the DOM to update
+        setTimeout(() => {
+          // Find the tallest card
+          let maxHeight = 0;
+          cards.forEach(card => {
+            const cardHeight = card.offsetHeight;
+            maxHeight = Math.max(maxHeight, cardHeight);
+          });
+
+          // Set all cards to the height of the tallest card + a little extra for safety
+          const newHeight = maxHeight + 10;
+          setCardHeight(newHeight);
+          cards.forEach(card => {
+            card.style.height = `${newHeight}px`;
+          });
+        }, 50);
+      };
 
       // Adjust height and position of container after measurements
       const adjustLayout = () => {
-        if (headerRef.current && triggerRef.current) {
+        if (headerRef.current && triggerRef.current && cardsContainerRef.current) {
           const viewportHeight = window.innerHeight;
           const navbarHeight = 68; // Your fixed navbar height
           const headerHeight = headerRef.current.offsetHeight;
@@ -112,67 +140,117 @@ const ServicesSection = () => {
           // Set height based on available space, with a minimum to ensure cards are visible
           triggerRef.current.style.height = `${Math.max(
             availableHeight,
-            400
+            cardHeight + 80 // Add extra padding
           )}px`;
 
           // Calculate the ideal top position to vertically center the cards in the available space
-          // without leaving too much space between header and cards
-          const cardHeight =
-            document.querySelector(".service-card").offsetHeight;
-          const topSpace = Math.max((availableHeight - cardHeight) / 4, 20); // Use 1/4 of remaining space as top padding
-
+          const topSpace = Math.max((availableHeight - cardHeight) / 3, 30);
           cardsContainerRef.current.style.paddingTop = `${topSpace}px`;
+          cardsContainerRef.current.style.paddingBottom = `${topSpace}px`;
         }
       };
 
-      // Initial adjustment
-      setTimeout(adjustLayout, 100); // Small delay to ensure DOM elements are fully rendered
+      // Set uniform card heights first
+      setUniformCardHeight();
 
-      // Update on window resize
-      window.addEventListener("resize", adjustLayout);
+      // Then adjust layout after cards have their heights set
+      setTimeout(adjustLayout, 100);
 
-      // Calculate the total width of all cards
+      // Calculate the total width of all cards plus extra room for the last card
       let cards = gsap.utils.toArray(".service-card");
       let totalWidth = 0;
+      let lastCardWidth = 0;
 
-      cards.forEach((card) => {
-        totalWidth +=
-          card.offsetWidth +
+      cards.forEach((card, index) => {
+        const cardWidth = card.offsetWidth +
           parseInt(window.getComputedStyle(card).marginLeft) +
           parseInt(window.getComputedStyle(card).marginRight);
+        
+        totalWidth += cardWidth;
+        
+        // Save the last card's width
+        if (index === cards.length - 1) {
+          lastCardWidth = cardWidth;
+        }
       });
 
-      // Simple horizontal scroll animation - no centering
+      // Add sufficient padding to ensure the last card can be fully centered on screen
+      // We want to be able to scroll until the last card is in the center/right position
+      const extraSpaceForLastCard = Math.max(window.innerWidth - lastCardWidth, window.innerWidth / 2);
+      totalWidth += extraSpaceForLastCard;
+
+      // Horizontal scroll animation with increased end buffer
       const horizontalScroll = gsap.to(cardsContainerRef.current, {
-        x: () => -(totalWidth - window.innerWidth),
+        x: () => -(totalWidth - window.innerWidth - 280), // Much larger buffer to ensure full visibility of last card
         ease: "none",
         scrollTrigger: {
           trigger: triggerRef.current,
           start: "top top+=68", // Adjust for 68px navbar
-          end: () => `+=${totalWidth}`,
+          end: () => `+=${totalWidth + 400}`, // Much more space for complete scrolling
           pin: true,
           scrub: 1,
           invalidateOnRefresh: true,
           onUpdate: (self) => {
-            // When scrolled to the end, scroll to the next section
-            if (self.progress > 0.95 && nextSection) {
-              if (!self._nextSectionTriggered) {
+            // Create a function to check if the last card is fully visible and centered/right-aligned
+            const isLastCardFullyAndProperlyVisible = () => {
+              const cards = document.querySelectorAll('.service-card');
+              if (cards.length === 0) return false;
+              
+              const lastCard = cards[cards.length - 1];
+              const lastCardRect = lastCard.getBoundingClientRect();
+              const containerRect = triggerRef.current.getBoundingClientRect();
+              const viewportWidth = window.innerWidth;
+              
+              // Check three conditions:
+              // 1. Last card is fully inside the container (not cut off on right)
+              const isFullyVisible = lastCardRect.right <= containerRect.right;
+              
+              // 2. Last card is positioned properly (center to right side) - should occupy right third of screen
+              const isProperlyPositioned = lastCardRect.left >= viewportWidth / 3;
+              
+              // 3. Last card's right edge is close to the container's right edge (not too far left)
+              // This ensures the card is "featured" on the right side, not just barely visible
+              const isCloseToRightEdge = containerRect.right - lastCardRect.right < 100;
+        
+              return isFullyVisible && isProperlyPositioned && isCloseToRightEdge;
+            };
+            
+            // Only trigger next section when last card is properly visible and we're near the end of scroll
+            if (self.progress > 0.9 && nextSection) {
+              const lastCardCheck = isLastCardFullyAndProperlyVisible();
+              
+              if (lastCardCheck && !self._nextSectionTriggered) {
                 self._nextSectionTriggered = true;
-
-                // Get the position of the next section relative to the document
-                const nextSectionTop =
-                  nextSection.getBoundingClientRect().top + window.scrollY;
-
-                // Smooth scroll to that position
-                window.scrollTo({
-                  top: nextSectionTop,
-                  behavior: "smooth",
-                });
+                // Longer delay to ensure user has seen the last card before moving on
+                setTimeout(() => {
+                  // Get the position of the next section relative to the document
+                  const nextSectionTop =
+                    nextSection.getBoundingClientRect().top + window.scrollY;
+  
+                  // Smooth scroll to that position
+                  window.scrollTo({
+                    top: nextSectionTop,
+                    behavior: "smooth",
+                  });
+                }, 800);
               }
+            } else if (self.progress < 0.85) {
+              // Reset the trigger when scrolling back
+              self._nextSectionTriggered = false;
             }
           },
         },
       });
+
+      // Update on window resize
+      const handleResize = () => {
+        setUniformCardHeight();
+        setTimeout(adjustLayout, 100);
+        // Force ScrollTrigger to recalculate
+        ScrollTrigger.refresh();
+      };
+
+      window.addEventListener("resize", handleResize);
 
       return () => {
         // Clean up ScrollTrigger when component unmounts
@@ -182,12 +260,14 @@ const ServicesSection = () => {
         ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
 
         // Remove resize listener
-        window.removeEventListener("resize", adjustLayout);
+        window.removeEventListener("resize", handleResize);
       };
     }
-  }, []);
+  }, [cardHeight]);
 
-  return (
+  
+      // Also modify the component to add a container that ensures visibility of the last card
+      return (
     <section
       id="services"
       ref={sectionRef}
@@ -223,15 +303,18 @@ const ServicesSection = () => {
         </div>
 
         <div ref={triggerRef} className="overflow-hidden">
-          <div ref={cardsContainerRef} className="flex flex-nowrap">
-            {services.map((service) => (
-              <ServiceCard
-                key={service.id}
-                title={service.title}
-                imageSrc={service.imageSrc}
-                alt={service.alt}
-              />
-            ))}
+          {/* Added an inner div with padding to ensure the last card is visible */}
+          <div className="pr-[300px]"> {/* Extra padding to ensure last card visibility */}
+            <div ref={cardsContainerRef} className="flex flex-nowrap">
+              {services.map((service) => (
+                <ServiceCard
+                  key={service.id}
+                  title={service.title}
+                  imageSrc={service.imageSrc}
+                  alt={service.alt}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>

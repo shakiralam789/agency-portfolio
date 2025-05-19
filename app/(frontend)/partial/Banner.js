@@ -4,7 +4,10 @@ import OutlinedHeading from "@/components/OutlinedHeading";
 
 export default function Banner() {
   return (
-    <section id="home" className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50">
+    <section
+      id="home"
+      className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
+    >
       <div className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl" />
       <div className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-pink-200/30 to-yellow-200/30 blur-3xl" />
 
@@ -15,20 +18,20 @@ export default function Banner() {
           </span>
         </div>
 
-        <OutlinedHeading className="font-90">User-centered designs</OutlinedHeading>
+        <OutlinedHeading className="font-90">Designing Digital</OutlinedHeading>
 
         <h2 className="font-bold text-primary-dark mb-4 md:mb-6 font-90 leading-tight tracking-tight">
-          that drive Results
+          Experiences that Delight
         </h2>
 
         <p className="text-gray-700 max-w-2xl mx-auto mb-10 md:mb-12 font-20">
-          Nuehva Medium design seamless digital experiences that engage users
-          and grow your business
+          We craft beautiful, intuitive, and scalable user interfaces that
+          elevate your product and connect deeply with your users.
         </p>
-
-        <Button href="#contact">
-          Contact us
-        </Button>
+        <div className="flex items-center gap-6">
+          <Button href="#contact">Start your project</Button>
+          <Button variant="stroke" href="#contact">View out work</Button>
+        </div>
       </div>
     </section>
   );

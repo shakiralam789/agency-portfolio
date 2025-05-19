@@ -28,7 +28,7 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
         onClick={closeAnim}
         className="absolute inset-0 bg-black/50 cursor-zoom-out"
       ></div>
-      <div className="active max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
+      <div className="rounded-l-[32px] 2xl:rounded-l-[34px] active max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
         <div className="min-h-screen grid grid-cols-12 gap-2 2xl:gap-4">
           <div className="col-span-5 overflow-y-auto h-screen">
             <div className="p-3 pr-0 flex flex-col min-h-screen">
@@ -50,8 +50,17 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
                   </div>
                 </div>
               </div> */}
-              <div className="flex-1 p-3 bg-gray-100">
-                <h2 className="font-20 text-dark2">One to One training</h2>
+              <div className="flex-1 p-3 relative">
+                <Image
+                  className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"
+                  src={"/images/colorFull-rec.png"}
+                  alt="shape"
+                  width={500}
+                  height={500}
+                />
+                <h2 className="font-20 font-semibold text-dark2">
+                  One to One training
+                </h2>
                 <ul className="mt-5 font-16 space-y-4 text-primary-green">
                   <li className="flex gap-3 font-16">
                     <ClockIcon className="mt-0.5" />

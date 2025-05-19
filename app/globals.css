@@ -33,8 +33,13 @@ html{
     font-size: clamp(1.75rem, 3vw + 1rem, 2.5rem); /* 28px to 48px */
     }
 
+    
     .font-26 {
-    font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.625rem); /* 18px to 26px */
+        font-size: clamp(1.125rem, 1.5vw + 0.5rem, 1.625rem); /* 18px to 26px */
+    }
+
+    .font-24 {
+    font-size: clamp(1rem, 1.25vw + 0.5rem, 1.5rem); /* 16px to 24px */
     }
 
     .font-18 {
@@ -46,7 +51,7 @@ html{
     }
 
     .def-label{
-        @apply capitalize block font-medium mb-1.5 2xl:mb-2 font-16 text-gray-600 font-16;
+        @apply capitalize block font-semibold mb-2 2xl:mb-2.5 font-16 text-gray-800 font-16;
     }
 
     .menu{
@@ -77,7 +82,7 @@ html{
     }
 
     .field-base{
-        @apply duration-100 font-16 w-full px-3 bg-white py-2 2xl:py-2.5 border rounded-lg focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-green-default
+        @apply duration-100 placeholder:text-gray-300 placeholder:text-xs 2xl:placeholder:text-sm font-16 w-full px-3 bg-white py-2 2xl:py-2.5 rounded-lg focus:outline-none focus:ring-offset-2 focus:ring-2 focus:ring-green-default
     }
 
     .field-base.danger{
@@ -164,4 +169,18 @@ swiper-button-next,
 }
 .swiper-button-disabled{
     @apply opacity-50 pointer-events-none;
+}
+
+.swiper-container-equal-height .swiper-wrapper {
+    display: flex;
+    align-items: stretch;
+}
+
+.swiper-container-equal-height .swiper-slide {
+    height: auto;
+    display: flex;
+}
+
+.swiper-container-equal-height .swiper-slide > div {
+    width: 100%;
 }

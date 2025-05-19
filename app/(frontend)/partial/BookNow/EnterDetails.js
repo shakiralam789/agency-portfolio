@@ -51,6 +51,7 @@ export default function EnterDetails({
         <div>
           <Label className="required">Name</Label>
           <TextField
+            className="border"
             value={data.name || ""}
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
@@ -59,6 +60,7 @@ export default function EnterDetails({
         <div>
           <Label className="required">Email</Label>
           <TextField
+            className="border"
             value={data.email || ""}
             onChange={(e) => setData({ ...data, email: e.target.value })}
             type="email"
@@ -72,6 +74,7 @@ export default function EnterDetails({
             {data?.guest_email.map((item, index) => (
               <div key={index}>
                 <TextField
+                  className="border"
                   value={item || ""}
                   onChange={(e) => {
                     let list = { ...data };
@@ -108,6 +111,7 @@ export default function EnterDetails({
           </Label>
 
           <TextArea
+            className="border"
             value={data.message || ""}
             onChange={(e) => setData({ ...data, message: e.target.value })}
           />

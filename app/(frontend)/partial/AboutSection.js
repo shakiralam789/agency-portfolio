@@ -3,30 +3,68 @@ import Title from "./Title";
 import Subtitle from "./Subtitle";
 import P from "./P";
 import AboutAnim from "./lotties/About";
+import Image from "next/image";
+import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 export default function AboutSection() {
   return (
     <section id="about" className="py-16 md:py-24 bg-[#fcfaf8] overflow-hidden">
       <div className="container">
-        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-12 lg:gap-8">
+        <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           {/* Text Content */}
-          <div className="w-full lg:w-5/12 xl:w-5/12">
-            <Subtitle>ABOUT US</Subtitle>
-            <Title className="mt-3 mb-6">
-              We're a team of <br className="hidden sm:block" />
-              passionate designers
+          <div className="w-full lg:w-1/2">
+            <Subtitle>Why us</Subtitle>
+            <Title className="mt-3 mb-8">
+              Reason Behind Choosing
+              <Image
+                className="mt-3 w-36"
+                src="/images/logo.png"
+                width={1920}
+                height={1080}
+                alt="logo"
+              />
             </Title>
+            <div className="space-y-3">
+              <div>
+                <div className="flex items-center gap-2 2xl:gap-3 mb-2">
+                  <CheckCircleIcon className="size-5 2xl:size-6" />
+                  <div className="text-primary-dark font-semibold font-18">
+                    Design-Led Approach
+                  </div>
+                </div>
+                <P className="mb-8">
+                  Every pixel we craft serves a purpose—balancing form and
+                  function.
+                </P>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 2xl:gap-3 mb-2">
+                  <CheckCircleIcon className="size-5 2xl:size-6" />
+                  <div className="text-primary-dark font-semibold font-18">
+                    Agile and Scalable
+                  </div>
+                </div>
+                <P className="mb-8">
+                  We adapt to your product needs—startups to enterprises.
+                </P>
+              </div>
+              <div>
+                <div className="flex items-center gap-2 2xl:gap-3 mb-2">
+                  <CheckCircleIcon className="size-5 2xl:size-6" />
+                  <div className="text-primary-dark font-semibold font-18">
+                    Client-Centric Collaboration
+                  </div>
+                </div>
+                <P className="mb-8">
+                  Transparent, communicative, and responsive from start to
+                  finish.
+                </P>
+              </div>
+            </div>
 
-            <P className="mb-8">
-              Nuehva Medium is a team of passionate designers and Developers
-              that dedicated to creating user-friendly, visually stunning
-              digital experiences. With years of expertise in UI/UX design &
-              Development, we help brands connect with their audience and
-              achieve their goals.
-            </P>
             <Button href="#contact">Contact us</Button>
           </div>
-          <div className="w-full lg:w-6/12 xl:w-6/12 overflow-hidden">
+          <div className="w-full lg:w-1/2 overflow-hidden">
             <AboutAnim />
           </div>
         </div>
