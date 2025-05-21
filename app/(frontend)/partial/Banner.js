@@ -3,6 +3,7 @@ import { useEffect, useRef } from "react";
 import Button from "@/components/form/Button";
 import OutlinedHeading from "@/components/OutlinedHeading";
 import gsap from "gsap";
+import Image from "next/image";
 
 export default function Banner() {
   const bannerRef = useRef(null);
@@ -114,6 +115,15 @@ export default function Banner() {
       }}
       className="relative py-16 w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
     >
+      <div className="w-8/12 sm:w-6/12 2xl:w-5/12 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <Image
+          className="w-full"
+          src={"/images/colorful-liquid-shapes.png"}
+          alt="colorful-liquid"
+          width={1000}
+          height={1000}
+        />
+      </div>
       <div
         ref={bgGradient1Ref}
         className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl"

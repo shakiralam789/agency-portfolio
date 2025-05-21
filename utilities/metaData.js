@@ -7,7 +7,7 @@ export async function generateMetadata({ locale, title, description = "" }) {
   const descriptionKey = messages[description] || "";
 
   return {
-    title: `${titleKey || title} | My app`,
+    title: `${titleKey || title} | Nuehva`,
     description: descriptionKey || description,
   };
 }

@@ -29,12 +29,14 @@ export default function AboutAnim({ className = "" }) {
   }, []);
 
   return (
-    <video
-      ref={videoRef}
-      src={aboutVideo}
-      muted
-      playsInline
-      className={cn("w-full h-auto -mb-1", className)}
-    />
+    <div className="rounded-2xl 2xl:rounded-3xl overflow-hidden w-full bg-white">
+      <video
+        ref={videoRef}
+        src={aboutVideo}
+        muted
+        playsInline
+        className={cn("w-full h-auto -mb-1", className)}
+      />
+    </div>
   );
 }

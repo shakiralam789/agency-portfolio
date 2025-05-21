@@ -1,6 +1,8 @@
 import React from "react";
 import Navbar from "./partial/Navbar";
 import FooterSection from "./partial/FooterSection";
+import { generateMetadata } from "@/utilities/metaData";
+export const metadata = () => generateMetadata({ title: "Home" });
 
 export default function layout({ children }) {
   return (

@@ -5,8 +5,8 @@ import Link from "next/link";
 import cn from "@/utilities/cn";
 import SpinAnim from "../animation/SpinAnim";
 import { useFormStatus } from "react-dom";
+import { Squircle } from "corner-smoothing";
 
-// Icons
 const PlusIcon = ({ className }) => (
   <svg
     className={className}
@@ -105,8 +105,9 @@ export const Button = ({
 }) => {
   const { pending } = useFormStatus();
 
+  // Keep all your existing classes
   const baseClasses =
-    "w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-3 font-16 py-2 2xl:py-2.5 text-center rounded-lg transition-colors focus:outline-none";
+    "cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none";
 
   const variantClasses = {
     primary:
@@ -114,22 +115,26 @@ export const Button = ({
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
-      "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
+      "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
     ghost: "bg-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50",
     "stroke-icon":
-      "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
-    edit: "bg-white border border-gray-300 text-primary-dark hover:bg-gray-50 focus:ring-2 focus:ring-primary-green focus:ring-offset-2",
+      "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
+    edit: "bg-white text-primary-dark hover:bg-gray-50 focus:ring-2 focus:ring-primary-green focus:ring-offset-2",
   };
 
   const disabledClasses =
     "opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200 border-gray-300";
 
+  // Modify to remove border classes from variantClasses, as we'll handle those separately
   const buttonClasses = cn(
     baseClasses,
     disabled ? disabledClasses : variantClasses[variant],
     fullWidth ? "w-full" : "",
     className
   );
+
+  // Determine if this variant needs a border
+  const needsBorder = ['stroke', 'stroke-icon', 'edit'].includes(variant) && !disabled;
 
   let displayIcon = icon;
 
@@ -139,11 +144,7 @@ export const Button = ({
       variant === "stroke-icon" ||
       (variant === "primary" && iconPosition === "left")
     ) {
-      displayIcon = (
-        <PlusIcon
-          className={cn("h-4 w-4")}
-        />
-      );
+      displayIcon = <PlusIcon className={cn("h-4 w-4")} />;
     } else if (variant === "edit") {
       displayIcon = <EditIcon className="h-4 w-4" />;
     }
@@ -163,55 +164,115 @@ export const Button = ({
 
   const finalRel = target === "_blank" ? "noopener noreferrer" : rel;
 
+  // For variants with border
+  if (needsBorder) {
+    const renderBorderedButton = (Element, additionalProps = {}) => (
+      <div className="relative inline-block">
+        {/* Border Squircle (slightly larger) */}
+        <Squircle
+          cornerRadius={12}
+          cornerSmoothing={0.8}
+          className="absolute inset-0 bg-gray-300" // Border color from your original styling
+        />
+        
+        {/* Content Squircle (slightly smaller) */}
+        <Squircle
+          as={Element}
+          cornerRadius={11.5}
+          cornerSmoothing={0.8}
+          className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+          {...additionalProps}
+          {...props}
+        >
+          <span className={`flex items-center gap-2 ${
+            pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}>
+            {content}
+          </span>
+          {(pending || isProcessing) && (
+            <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          )}
+        </Squircle>
+      </div>
+    );
+
+    if (href && !disabled) {
+      if (href.startsWith("/") || href.startsWith("#")) {
+        return renderBorderedButton(Link, { href, target, rel: finalRel });
+      }
+      return renderBorderedButton("a", { href, target, rel: finalRel });
+    }
+    return renderBorderedButton("button", { type, onClick, disabled });
+  }
+  
+  // For variants without border (your original implementation)
   if (href && !disabled) {
     if (href.startsWith("/") || href.startsWith("#")) {
       return (
-        <Link
+        <Squircle
+          cornerRadius={12}
+          cornerSmoothing={0.8}
+          as={Link}
           href={href}
           className={buttonClasses}
           target={target}
           rel={finalRel}
           {...props}
         >
-          {content}
-        </Link>
+          <span className={`flex items-center gap-2 ${
+            pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}>
+            {content}
+          </span>
+          {(pending || isProcessing) && (
+            <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+          )}
+        </Squircle>
       );
     }
 
     return (
-      <a
+      <Squircle
+        cornerRadius={12}
+        cornerSmoothing={0.8}
+        as={"a"}
         href={href}
-      className={cn(buttonClasses,className)}
+        className={buttonClasses}
         target={target}
         rel={finalRel}
         {...props}
       >
-        {content}
-      </a>
+        <span className={`flex items-center gap-2 ${
+          pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
+        }`}>
+          {content}
+        </span>
+        {(pending || isProcessing) && (
+          <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+        )}
+      </Squircle>
     );
   }
 
   return (
-    <button
-      className={cn(buttonClasses+" relative",className)}
+    <Squircle
+      cornerRadius={12}
+      cornerSmoothing={0.8}
+      className={buttonClasses}
       disabled={disabled}
       type={type}
       onClick={onClick}
       {...props}
     >
-      <span
-        className={`flex items-center gap-2 ${
-          pending || isProcessing
-            ? "opacity-0 pointer-events-none"
-            : "opacity-100"
-        }`}
-      >
+      <span className={`flex items-center gap-2 ${
+        pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
+      }`}>
         {content}
       </span>
       {(pending || isProcessing) && (
         <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
       )}
-    </button>
+    </Squircle>
   );
 };
 
@@ -229,7 +290,7 @@ export const IconButton = ({
 }) => {
   // Base classes for all icon buttons
   const baseClasses =
-    "flex items-center gap-2 justify-center p-2 2xl:p-2.5 rounded-lg transition-colors focus:outline-none";
+    "cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none";
 
   // Classes for different button variants
   const variantClasses = {
@@ -238,7 +299,7 @@ export const IconButton = ({
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
-      "bg-white border border-gray-300 text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
+      "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
     ghost: "bg-transparent text-gray-400 hover:text-gray-600",
   };
 
@@ -253,42 +314,86 @@ export const IconButton = ({
     className
   );
 
+  // Determine if this variant needs a border
+  const needsBorder = variant === 'stroke' && !disabled;
+
   // Set correct rel attribute for external links that open in new tab
   const finalRel = target === "_blank" ? "noopener noreferrer" : rel;
 
-  // If href is provided, render as a link
+  // For variants with border
+  if (needsBorder) {
+    const renderBorderedIconButton = (Element, additionalProps = {}) => (
+      <div className="relative inline-block">
+        {/* Border Squircle (slightly larger) */}
+        <Squircle
+          cornerRadius={8}
+          cornerSmoothing={0.8}
+          className="absolute inset-0 bg-gray-300" // Border color from your original styling
+        />
+        
+        {/* Content Squircle (slightly smaller) */}
+        <Squircle
+          as={Element}
+          cornerRadius={7.5}
+          cornerSmoothing={0.8}
+          className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+          {...additionalProps}
+          {...props}
+        >
+          {icon}
+        </Squircle>
+      </div>
+    );
+
+    if (href && !disabled) {
+      if (href.startsWith("/") || href.startsWith("#")) {
+        return renderBorderedIconButton(Link, { href, target, rel: finalRel });
+      }
+      return renderBorderedIconButton("a", { href, target, rel: finalRel });
+    }
+    return renderBorderedIconButton("button", { type, onClick, disabled });
+  }
+  
+  // For variants without border, use standard Squircle
   if (href && !disabled) {
-    // Use Next.js Link for internal navigation
     if (href.startsWith("/") || href.startsWith("#")) {
       return (
-        <Link
+        <Squircle
+          as={Link}
           href={href}
+          cornerRadius={8}
+          cornerSmoothing={0.8}
           className={buttonClasses}
           target={target}
           rel={finalRel}
           {...props}
         >
           {icon}
-        </Link>
+        </Squircle>
       );
     }
 
-    // Use regular anchor for external links
     return (
-      <a
+      <Squircle
+        as="a"
         href={href}
+        cornerRadius={8}
+        cornerSmoothing={0.8}
         className={buttonClasses}
         target={target}
         rel={finalRel}
         {...props}
       >
         {icon}
-      </a>
+      </Squircle>
     );
   }
 
   return (
-    <button
+    <Squircle
+      as="button"
+      cornerRadius={8}
+      cornerSmoothing={0.8}
       className={buttonClasses}
       disabled={disabled}
       type={type}
@@ -296,7 +401,7 @@ export const IconButton = ({
       {...props}
     >
       {icon}
-    </button>
+    </Squircle>
   );
 };
 

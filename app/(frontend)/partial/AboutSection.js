@@ -67,7 +67,7 @@ export default function AboutSection() {
       <div className="container">
         <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
           {/* Text Content */}
-          <div ref={textContentRef} className="w-full lg:w-1/2">
+          <div ref={textContentRef} className="w-full lg:w-1/2 2xl:w-5/12">
             <Subtitle>Why us</Subtitle>
             <Title className="mt-3 mb-8">
               Reason Behind Choosing
@@ -119,7 +119,7 @@ export default function AboutSection() {
 
             <Button href="#contact">Contact us</Button>
           </div>
-          <div ref={animationRef} className="w-full lg:w-1/2 overflow-hidden">
+          <div ref={animationRef} className="w-full lg:w-1/2 2xl:w-7/12 overflow-hidden">
             <AboutAnim />
           </div>
         </div>

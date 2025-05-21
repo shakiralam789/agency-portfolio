@@ -28,10 +28,10 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
         onClick={closeAnim}
         className="absolute inset-0 bg-black/50 cursor-zoom-out"
       ></div>
-      <div className="rounded-l-[32px] 2xl:rounded-l-[34px] active max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
+      <div className="active max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
         <div className="min-h-screen grid grid-cols-12 gap-2 2xl:gap-4">
           <div className="col-span-5 overflow-y-auto h-screen">
-            <div className="p-3 pr-0 flex flex-col min-h-screen">
+            <div className="p-4 2xl:p-5 pr-0 flex flex-col min-h-screen">
               {/* <div className="bg-gray-200 p-3">
                 <h2 className="font-30 text-black">
                   Triple Web Discovery Call
@@ -50,9 +50,9 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
                   </div>
                 </div>
               </div> */}
-              <div className="flex-1 p-3 relative">
+              <div className="flex-1 p-4 2xl:p-5 relative">
                 <Image
-                  className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"
+                  className="absolute top-0 right-0 w-full -z-10 h-full"
                   src={"/images/colorFull-rec.png"}
                   alt="shape"
                   width={500}

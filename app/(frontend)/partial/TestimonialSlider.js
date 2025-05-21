@@ -113,7 +113,7 @@ export default function TestimonialSlider() {
           >
             {testimonials.map((testimonial) => (
               <SwiperSlide key={testimonial.id} className="h-auto">
-                <div className="flex flex-col rounded-3xl shadow-md overflow-hidden h-full bg-white relative">
+                <div className="flex flex-col rounded-3xl overflow-hidden h-full relative">
                   <div className="flex-grow">
                     <div className="mb-3 flex justify-between">
                       <Quote className="mt-6 relative z-20 ml-6 w-[100px] h-[100px]" />
@@ -143,7 +143,7 @@ export default function TestimonialSlider() {
 
                   <div className="absolute inset-0 z-0 pointer-events-none">
                     <Image
-                      className="w-full h-full object-cover"
+                      className="w-full h-full"
                       src={"/images/testimonial/testimonial-card-bg.png"}
                       alt="Map"
                       width={1920}

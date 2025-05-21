@@ -51,7 +51,7 @@ html{
     }
 
     .def-label{
-        @apply capitalize block font-semibold mb-2 2xl:mb-2.5 font-16 text-gray-800 font-16;
+        @apply capitalize block font-semibold mb-2 2xl:mb-2.5 font-16 text-primary-dark/80 font-16;
     }
 
     .menu{

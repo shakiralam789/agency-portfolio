@@ -105,6 +105,7 @@ const Navbar = () => {
               </Link>
             ))}
             <Button href={"#contact"}>Contact us</Button>
+            
           </div>
         </div>
       )}
