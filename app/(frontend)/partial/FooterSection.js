@@ -1,9 +1,7 @@
 // components/FooterSection.jsx
 import React from "react";
 import Link from "next/link";
-import Logo from "@/components/Logo";
 import Image from "next/image";
-// import FooterLottie from "./lotties/Footer";
 const FooterSection = () => {
   return (
     <footer id="footer" className="relative py-12 px-4 md:px-8">
@@ -26,8 +24,7 @@ const FooterSection = () => {
                 />
               </Link>
               <p className="def-para sm:max-w-md">
-                An AI-powered support ecosystem built to give your users an
-                outstanding customer experience - on autopilot.
+                Nuehva is a design-led UI/UX and software agency helping brands turn ideas into powerful digital experiences. From user research to full-stack development, we craft solutions that drive engagement, usability, and growth.
               </p>
             </div>
 
@@ -98,7 +95,7 @@ const FooterSection = () => {
           <div className="text-center sm:text-left col-span-12 lg:col-span-7 grid grid-cols-1 sm:grid-cols-3 gap-6 md:gap-12">
             <div>
               <h3 className="font-20 font-medium text-gray-800 mb-4">
-                Products
+                Quick Links
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -146,7 +143,7 @@ const FooterSection = () => {
 
             <div>
               <h3 className="font-20 font-medium text-gray-800 mb-4">
-                Resources
+                Products
               </h3>
               <ul className="space-y-2">
                 <li>
@@ -191,7 +188,7 @@ const FooterSection = () => {
               <ul className="space-y-2">
                 <li>
                   <Link
-                    href="/terms"
+                    href="/terms-and-conditions"
                     className="text-gray-600 hover:text-gray-800 text-sm"
                   >
                     Terms and conditions
@@ -199,13 +196,13 @@ const FooterSection = () => {
                 </li>
                 <li>
                   <Link
-                    href="/privacy"
+                    href="/privacy-policy"
                     className="text-gray-600 hover:text-gray-800 text-sm"
                   >
                     Privacy Policy
                   </Link>
                 </li>
-                <li>
+                {/* <li>
                   <Link
                     href="/data-processing"
                     className="text-gray-600 hover:text-gray-800 text-sm"
@@ -220,7 +217,7 @@ const FooterSection = () => {
                   >
                     Brand Kit
                   </Link>
-                </li>
+                </li> */}
               </ul>
             </div>
           </div>

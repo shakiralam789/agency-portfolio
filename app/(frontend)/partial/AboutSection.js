@@ -11,18 +11,15 @@ import Image from "next/image";
 import { CheckCircleIcon } from "@heroicons/react/24/outline";
 
 export default function AboutSection() {
-  // Create refs for the elements we want to animate
   const sectionRef = useRef(null);
   const textContentRef = useRef(null);
   const animationRef = useRef(null);
 
   useEffect(() => {
-    // Register the ScrollTrigger plugin
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    // Set initial state - both parts are invisible
     gsap.set(textContentRef.current, { 
       opacity: 0,
       x: -50
@@ -33,11 +30,10 @@ export default function AboutSection() {
       x: 50
     });
 
-    // Create the scroll-triggered animation
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 75%", // Animation starts when the top of the section hits 75% from the top of the viewport
+        start: "top 75%",
         end: "bottom bottom",
         toggleActions: "play none none none"
       }

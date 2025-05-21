@@ -15,17 +15,25 @@ export default function Banner() {
   const bgGradient2Ref = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
-    
-    gsap.set([taglineRef.current, headingRef.current, subheadingRef.current, 
-              descriptionRef.current, buttonsRef.current], { 
-      opacity: 0,
-      y: 30 
-    });
-    
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.8 });
+
+    gsap.set(
+      [
+        taglineRef.current,
+        headingRef.current,
+        subheadingRef.current,
+        descriptionRef.current,
+        buttonsRef.current,
+      ],
+      {
+        opacity: 0,
+        y: 30,
+      }
+    );
+
     gsap.set([bgGradient1Ref.current, bgGradient2Ref.current], {
       opacity: 0,
-      scale: 0.8
+      scale: 0.8,
     });
 
     // Background gradients animation
@@ -33,43 +41,63 @@ export default function Banner() {
       opacity: 1,
       scale: 1,
       duration: 1.5,
-      stagger: 0.2
+      stagger: 0.2,
     });
 
     // Tag line animation
-    tl.to(taglineRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, "-=0.8");
+    tl.to(
+      taglineRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      },
+      "-=0.8"
+    );
 
     // Main heading animation
-    tl.to(headingRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, "-=0.6");
+    tl.to(
+      headingRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      },
+      "-=0.6"
+    );
 
     // Subheading animation
-    tl.to(subheadingRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, "-=0.6");
+    tl.to(
+      subheadingRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      },
+      "-=0.6"
+    );
 
     // Description animation
-    tl.to(descriptionRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, "-=0.4");
+    tl.to(
+      descriptionRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      },
+      "-=0.4"
+    );
 
     // Buttons animation
-    tl.to(buttonsRef.current, {
-      opacity: 1,
-      y: 0,
-      duration: 0.8
-    }, "-=0.4");
+    tl.to(
+      buttonsRef.current,
+      {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+      },
+      "-=0.4"
+    );
 
     // Cleanup function
     return () => {
@@ -81,15 +109,18 @@ export default function Banner() {
     <section
       id="home"
       ref={bannerRef}
-      className="pt-header-height relative min-h-screen w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
+      style={{
+        minHeight: "calc(100vh - 68px)",
+      }}
+      className="relative py-16 w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
     >
-      <div 
+      <div
         ref={bgGradient1Ref}
-        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl" 
+        className="absolute top-1/3 left-1/2 -translate-x-1/2 w-[600px] h-[600px] rounded-full bg-gradient-to-r from-green-200/30 to-blue-200/30 blur-3xl"
       />
-      <div 
+      <div
         ref={bgGradient2Ref}
-        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-pink-200/30 to-yellow-200/30 blur-3xl" 
+        className="absolute bottom-1/3 right-1/4 w-[400px] h-[400px] rounded-full bg-gradient-to-r from-pink-200/30 to-yellow-200/30 blur-3xl"
       />
 
       <div className="container mx-auto px-4 relative z-10 flex flex-col items-center text-center">
@@ -100,21 +131,31 @@ export default function Banner() {
         </div>
 
         <div ref={headingRef}>
-          <OutlinedHeading className="font-90">Designing Digital</OutlinedHeading>
+          <OutlinedHeading className="font-90">
+            Designing Digital
+          </OutlinedHeading>
         </div>
 
-        <h2 ref={subheadingRef} className="font-bold text-primary-dark mb-4 md:mb-6 font-90 leading-tight tracking-tight">
+        <h2
+          ref={subheadingRef}
+          className="font-bold text-primary-dark mb-4 md:mb-6 font-90 leading-tight tracking-tight"
+        >
           Experiences that Delight
         </h2>
 
-        <p ref={descriptionRef} className="text-gray-700 max-w-2xl mx-auto mb-10 md:mb-12 font-20">
+        <p
+          ref={descriptionRef}
+          className="text-gray-700 max-w-2xl mx-auto mb-10 md:mb-12 font-20"
+        >
           We craft beautiful, intuitive, and scalable user interfaces that
           elevate your product and connect deeply with your users.
         </p>
-        
+
         <div ref={buttonsRef} className="flex items-center gap-6">
           <Button href="#contact">Start your project</Button>
-          <Button variant="stroke" href="#contact">View our work</Button>
+          <Button variant="stroke" href="#contact">
+            View our work
+          </Button>
         </div>
       </div>
     </section>

@@ -1,23 +1,22 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import Lottie from "lottie-react";
-import loaderLottie from "@/lotties/loader.json";
-
+const loaderLogo = "/images/gif/logo.gif";
 export default function LoadingSpinner() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    setLoading(false);
+    const timer = setTimeout(() => {
+      setLoading(false);
+    }, 1500);
+
+    return () => clearTimeout(timer);
   }, []);
 
   return loading ? (
-    <div className="loader-container">
-      <Lottie
-        animationData={loaderLottie}
-        loop={true}
-        style={{ width: 500, height: 500 }}
-      />
+    <div className="z-[999] flex items-center justify-center bg-white fixed w-full inset-0 h-screen">
+      <img className={"w-56"} src={loaderLogo} alt="logo" />
+      {/* loading... */}
     </div>
   ) : null;
 }

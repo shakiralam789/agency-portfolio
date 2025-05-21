@@ -158,7 +158,7 @@ export default function ContactForm() {
 
           {/* Right side - Form */}
           <div ref={rightContentRef} className="w-full md:w-5/12 2xl:w-1/2 mt-6">
-            <div className="relative rounded-3xl shadow-sm p-4 2xl:p-6">
+            <div className="relative rounded-2xl shadow-sm p-6 2xl:p-8">
               <Image
                 className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"
                 src={"/images/colorFull-rec.png"}

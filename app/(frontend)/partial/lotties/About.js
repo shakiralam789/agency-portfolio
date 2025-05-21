@@ -11,16 +11,16 @@ export default function AboutAnim({ className = "" }) {
   const videoRef = useRef();
 
   useEffect(() => {
-    if (!videoRef.current) return;
+    if (videoRef === null || !videoRef.current) return;
 
     const trigger = ScrollTrigger.create({
       trigger: "#about",
       start: "top 80%",
       end: "bottom top",
-      onEnter: () => videoRef.current.play(),
-      onEnterBack: () => videoRef.current.play(),
-      onLeave: () => videoRef.current.pause(),
-      onLeaveBack: () => videoRef.current.pause(),
+      onEnter: () => videoRef.current && videoRef.current.play(),
+      onEnterBack: () => videoRef.current && videoRef.current.play(),
+      onLeave: () => videoRef.current && videoRef.current.pause(),
+      onLeaveBack: () => videoRef.current && videoRef.current.pause(),
     });
 
     return () => {
