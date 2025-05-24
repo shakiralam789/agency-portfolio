@@ -148,7 +148,7 @@ export default function StatsSection() {
         <h2 className="font-48 font-extrabold text-primary-dark mb-12">
           Our Stories
         </h2>
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+        <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
           <Image
             className="w-36 absolute top-1/2 -left-8 -translate-y-1/2"
             src={"/images/stories/stories-left.png"}
@@ -173,7 +173,7 @@ export default function StatsSection() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="relative aspect-square p-6 transform transition-transform duration-300 hover:scale-105"
+              className="mx-auto max-w-[400px] w-full relative aspect-square p-6 transform transition-transform duration-300 hover:scale-105"
             >
               <div className="absolute top-0 left-0 w-full h-full">
                 <Image
@@ -181,6 +181,7 @@ export default function StatsSection() {
                   width={400}
                   height={400}
                   alt={"unit"}
+                  className="w-full h-full"
                 />
               </div>
               <div className="relative flex flex-col justify-center h-full px-2 py-8 2xl:py-12">
@@ -190,6 +191,7 @@ export default function StatsSection() {
                     width={400}
                     height={400}
                     alt={"unit"}
+                    className="w-full h-full"
                   />
                 </div>
                 <h3 className="text-6xl 2xl:text-7xl font-bold text-gray-800 leading-tight">

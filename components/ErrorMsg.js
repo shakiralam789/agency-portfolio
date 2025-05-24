@@ -9,7 +9,7 @@ export default function ErrorMsg({
   className = "",
   ...props
 }) {
-  const commonClass = "font-14 text-red-600 first-letter:uppercase";
+  const commonClass = "font-16 text-red-600 first-letter:uppercase";
   return message ? (
     isPosition ? (
       <PositionalTooltip

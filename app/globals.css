@@ -184,3 +184,14 @@ swiper-button-next,
 .swiper-container-equal-height .swiper-slide > div {
     width: 100%;
 }
+
+.Toastify__toast-body {
+  @apply font-16;
+}
+.Toastify__progress-bar--success {
+  @apply !bg-green-400;
+}
+
+.Toastify__toast--success .Toastify__toast-icon svg {
+  @apply !fill-green-400;
+}

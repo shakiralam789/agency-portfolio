@@ -28,10 +28,10 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
         onClick={closeAnim}
         className="absolute inset-0 bg-black/50 cursor-zoom-out"
       ></div>
-      <div className="active max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
+      <div className="active overflow-y-auto max-w-[800px] 2xl:max-w-[1000px] opacity-0 pointer-events-none [&.active]:opacity-100 [&.active]:pointer-events-auto h-full bg-white z-30">
         <div className="min-h-screen grid grid-cols-12 gap-2 2xl:gap-4">
-          <div className="col-span-5 overflow-y-auto h-screen">
-            <div className="p-4 2xl:p-5 pr-0 flex flex-col min-h-screen">
+          <div className="col-span-12 md:col-span-5 overflow-y-auto md:h-screen">
+            <div className="p-4 2xl:p-5 pr-0 flex flex-col md:min-h-screen mr-4 md:mr-0">
               {/* <div className="bg-gray-200 p-3">
                 <h2 className="font-30 text-black">
                   Triple Web Discovery Call
@@ -84,12 +84,12 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
                     If you have any&nbsp;queries,&nbsp;please email us at
                     raquib@riple.com.
                   </P>
-                  <p className="text-green-default">raquib@riple.com.</p>
+                  <p className="text-green-default">nuehva@gmail.com </p>
                 </div>
               </div>
             </div>
           </div>
-          <div className="col-span-7 h-screen overflow-y-auto">
+          <div className="col-span-12 md:col-span-7 md:h-screen overflow-y-auto">
             <div className="min-h-screen p-3 pr-5">
               {isDetails ? (
                 <EnterDetails
@@ -101,6 +101,7 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
                 />
               ) : (
                 <SelectDataTime
+                  closeAnim={closeAnim}
                   data={data}
                   setData={setData}
                   isDetails={isDetails}

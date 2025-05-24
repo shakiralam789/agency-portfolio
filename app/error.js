@@ -32,7 +32,7 @@ export default function Error({ error, reset }) {
         </div>
         
         <h2 className="font-40 font-bold text-gray-900 mb-4">Something went wrong</h2>
-        <p className="font-24 text-gray-600 mb-8">
+        <p className="font-16 text-gray-600 mb-8">
           We apologize for the inconvenience. An unexpected error has occurred.
         </p>
         

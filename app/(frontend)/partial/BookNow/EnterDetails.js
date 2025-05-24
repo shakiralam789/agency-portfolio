@@ -5,6 +5,7 @@ import Button from "@/components/form/Button";
 import TextField from "@/components/form/TextField";
 import useApi from "@/hook/useApi";
 import ErrorMsg from "@/components/ErrorMsg";
+import { MinusCircleIcon, PlusIcon } from "@heroicons/react/24/outline";
 
 export default function EnterDetails({
   setIsDetails,
@@ -27,6 +28,7 @@ export default function EnterDetails({
     }
 
     let newData = { ...data, guest_email };
+
     await post(
       "/api/bookings/store",
       { body: newData },
@@ -45,7 +47,7 @@ export default function EnterDetails({
     );
   }
   return (
-    <form onSubmit={handleSubmit} className="py-6">
+    <form className="py-6">
       <h2 className="font-30 text-dark2 capitalize mb-4">Enter Details</h2>
       <div className="grid grid-cols-1 gap-y-4 2xl:gap-y-6">
         <div>
@@ -73,16 +75,32 @@ export default function EnterDetails({
           <div className="space-y-2">
             {data?.guest_email.map((item, index) => (
               <div key={index}>
-                <TextField
-                  className="border"
-                  value={item || ""}
-                  onChange={(e) => {
-                    let list = { ...data };
-                    list.guest_email[index] = e.target.value;
-                    setData(list);
-                  }}
-                  type="email"
-                />
+                <div
+                  className={`relative ${
+                    data?.guest_email.length > 1 ? "pr-6" : ""
+                  }`}
+                >
+                  {data?.guest_email.length > 1 && (
+                    <MinusCircleIcon
+                      onClick={() => {
+                        let list = { ...data };
+                        list.guest_email.splice(index, 1);
+                        setData(list);
+                      }}
+                      className="cursor-pointer hover:text-danger size-5 absolute top-1/2 -translate-y-1/2 right-0"
+                    />
+                  )}
+                  <TextField
+                    className="border"
+                    value={item || ""}
+                    onChange={(e) => {
+                      let list = { ...data };
+                      list.guest_email[index] = e.target.value;
+                      setData(list);
+                    }}
+                    type="email"
+                  />
+                </div>
                 {errors[`guest_email.${index}`] &&
                   errors[`guest_email.${index}`][0] && (
                     <ErrorMsg message={errors[`guest_email.${index}`][0]} />
@@ -94,16 +112,18 @@ export default function EnterDetails({
           <p className="font-16 text-para mt-2">
             Notify up to 10 Additional Guests of the Scheduled event.
           </p>
-          <Button
-            onClick={() =>
-              setData({ ...data, guest_email: [...data.guest_email, ""] })
-            }
-            type="button"
-            className="mt-2 text-white bg-green-default hover:bg-green-600"
-          >
-            {/* <PlusIcon /> */}
-            Add Guest
-          </Button>
+          <div>
+            <Button
+              onClick={() =>
+                setData({ ...data, guest_email: [...data.guest_email, ""] })
+              }
+              type="button"
+              className="mt-2 text-white gap-2"
+            >
+              <PlusIcon className="size-5 shrink-0" />
+              <span>Add Guest</span>
+            </Button>
+          </div>
         </div>
         <div>
           <Label>
@@ -123,18 +143,18 @@ export default function EnterDetails({
           </p>
         </div>
       </div>
-      <div className="flex items-center gap-4">
+      <div className="flex items-center gap-4 mt-5">
         <Button
-          type="button"
+          // type="button"
+          variant="stroke"
           onClick={() => setIsDetails(false)}
-          className="mt-5 text-white px-10 hover:text-white font-medium hover:bg-dark-green hover:border-dark-green"
         >
           Back
         </Button>
         <Button
           disabled={loading}
-          type="submit"
-          className="mt-5 text-white px-10 hover:text-white font-medium hover:bg-dark-green hover:border-dark-green"
+          // type="button"
+          onClick={handleSubmit}
         >
           {loading ? "Processing" : "Schedule Event"}
         </Button>

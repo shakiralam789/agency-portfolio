@@ -20,14 +20,25 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 export default function ContactForm() {
   const [isBookNowOpen, setIsBookNowOpen] = useState(false);
   const bookNowRef = useRef(null);
-  
+  const [serviceTypes, setServiceTypes] = useState([]);
+
   // Add refs for animation
   const sectionRef = useRef(null);
   const leftContentRef = useRef(null);
   const rightContentRef = useRef(null);
 
-  const { register, control, post, put, errors, handleSubmit } = useForm({
-    name: "",
+  const {
+    register,
+    control,
+    get,
+    post,
+    put,
+    errors,
+    handleSubmit,
+    apiErrors,
+    reset,
+  } = useForm({
+    full_name: "",
     email: "",
     company_name: "",
     project_budget: "",
@@ -35,14 +46,32 @@ export default function ContactForm() {
     project_details: "",
   });
 
+  useEffect(() => {
+    async function getProductType() {
+      let response = await get("/api/contact/service-types");
+      if (response.success) {
+        setServiceTypes(response.data);
+      }
+    }
+    getProductType();
+  }, [get]);
+
   function onSubmit(data) {
-    console.log(data);
+    post(
+      "/api/contact/submit",
+      { body: data },
+      {
+        onSuccess: (res) => {
+          reset();
+        },
+      }
+    );
   }
 
   function openBookNow() {
     setIsBookNowOpen(true);
   }
-  
+
   function closeAnim() {
     document.body.style.overflow = "auto";
     if (bookNowRef.current) {
@@ -76,53 +105,51 @@ export default function ContactForm() {
     }
   }, [isBookNowOpen]);
 
-  // Add scroll animation effect
   useEffect(() => {
-    // Register the ScrollTrigger plugin
     if (typeof window !== "undefined") {
       gsap.registerPlugin(ScrollTrigger);
     }
 
-    // Set initial state - both parts are invisible
-    gsap.set(leftContentRef.current, { 
+    gsap.set(leftContentRef.current, {
       opacity: 0,
-      x: -50
-    });
-    
-    gsap.set(rightContentRef.current, { 
-      opacity: 0,
-      x: 50
+      x: -50,
     });
 
-    // Create the scroll-triggered animation
+    gsap.set(rightContentRef.current, {
+      opacity: 0,
+      x: 50,
+    });
+
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 50%", // Animation starts when the top of the section hits 75% from the top of the viewport
+        start: "top 50%",
         end: "bottom bottom",
-        toggleActions: "play none none none"
-      }
+        toggleActions: "play none none none",
+      },
     });
 
-    // Animate both parts fading in
     tl.to(leftContentRef.current, {
       opacity: 1,
       x: 0,
       duration: 1,
-      ease: "power3.out"
+      ease: "power3.out",
     });
 
-    tl.to(rightContentRef.current, {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7"); // Start slightly before the first animation ends for a staggered effect
+    tl.to(
+      rightContentRef.current,
+      {
+        opacity: 1,
+        x: 0,
+        duration: 1,
+        ease: "power3.out",
+      },
+      "-=0.7"
+    );
 
-    // Cleanup function
     return () => {
       if (typeof window !== "undefined" && ScrollTrigger.getAll().length) {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     };
   }, []);
@@ -132,7 +159,10 @@ export default function ContactForm() {
       <div className="container">
         <div className="flex flex-col md:flex-row gap-4">
           {/* Left side - Text and Image */}
-          <div ref={leftContentRef} className="text-center md:text-left w-full md:w-7/12 2xl:w-1/2 mb-8 md:mb-0">
+          <div
+            ref={leftContentRef}
+            className="text-center md:text-left w-full md:w-1/2 mb-8 md:mb-0"
+          >
             <Title className="mb-4">
               Have a project idea in mind?
               <br />
@@ -157,7 +187,7 @@ export default function ContactForm() {
           </div>
 
           {/* Right side - Form */}
-          <div ref={rightContentRef} className="w-full md:w-5/12 2xl:w-1/2 mt-6">
+          <div ref={rightContentRef} className="w-full md:w-1/2 mt-6">
             <div className="relative rounded-2xl shadow-sm p-6 2xl:p-8">
               <Image
                 className="rounded-3xl absolute top-0 right-0 w-full -z-10 h-full"
@@ -172,12 +202,12 @@ export default function ContactForm() {
                   <div className="col-span-2">
                     <Label>Full Name</Label>
                     <TextField
-                      {...register("name", {
+                      {...register("full_name", {
                         required: "name is required",
                       })}
                       placeholder={"Enter your fullname"}
                     />
-                    <ErrorMsg message={errors?.name?.message} />
+                    <ErrorMsg message={errors?.full_name?.message} />
                   </div>
                   <div className="col-span-2 md:col-span-1">
                     <Label>Company Name</Label>
@@ -192,13 +222,15 @@ export default function ContactForm() {
                   <div className="col-span-2 md:col-span-1">
                     <Label>Email</Label>
                     <TextField
-                      {...register("name", {
+                      {...register("email", {
                         required: "Email is required",
                         isEmail: "Please enter a valid email address",
                       })}
                       placeholder={"Enter your email"}
                     />
-                    <ErrorMsg message={errors?.email?.message} />
+                    <ErrorMsg
+                      message={errors?.email?.message || apiErrors?.email}
+                    />
                   </div>
 
                   {/* Service Type */}
@@ -211,27 +243,31 @@ export default function ContactForm() {
                         <>
                           <CustomSelect
                             {...field}
-                            options={[
-                              { label: "option 1", value: "1" },
-                              { label: "Option 2", value: "2" },
-                            ]}
-                            placeholder="Select status"
+                            options={serviceTypes}
+                            placeholder="Select service type"
                           />
                         </>
                       )}
                     />
-                    <ErrorMsg message={errors?.status?.message} />
+                    <ErrorMsg
+                      message={
+                        errors?.service_type?.message || apiErrors?.service_type
+                      }
+                    />
                   </div>
 
                   <div>
                     <Label>project budget</Label>
                     <TextField
-                      {...register("project_budget", {
-                        required: "project budget is required",
-                      })}
+                      {...register("project_budget")}
                       placeholder={"Enter project budget"}
                     />
-                    <ErrorMsg message={errors?.project_budget?.message} />
+                    <ErrorMsg
+                      message={
+                        errors?.project_budget?.message ||
+                        apiErrors?.project_budget
+                      }
+                    />
                   </div>
 
                   {/* Project Details */}
@@ -239,19 +275,20 @@ export default function ContactForm() {
                     <Label>Project Details</Label>
                     <TextArea
                       rows="4"
-                      {...register("project_details")}
+                      {...register("project_details", {
+                        required: "Project details is required",
+                      })}
                       placeholder="Describe more about your idea!"
                     ></TextArea>
                     <ErrorMsg message={errors?.project_details?.message} />
                   </div>
 
-                  {/* Submit Buttons */}
                   <div className="col-span-2 flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
-                    <Button type="submit">Submit form</Button>
-                    <span className="text-gray-500">Or,</span>
-                    <Button onClick={openBookNow} type="button">
-                      Book a direct call
-                    </Button>
+                    <button type="submit">
+                      <Button>Submit form</Button>
+                    </button>
+                    <span className="text-gray-500">Or</span>
+                    <Button onClick={openBookNow}>Book a direct call</Button>
                   </div>
                 </div>
               </form>

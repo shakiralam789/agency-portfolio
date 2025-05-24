@@ -6,6 +6,7 @@ import { getLocale, getMessages } from "next-intl/server";
 
 import "./globals.css";
 import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 import NextTopLoader from "nextjs-toploader";
 import LoadingSpinner from "@/components/animation/LoadingSpin";
 
@@ -35,6 +36,8 @@ export default async function RootLayout({ children }) {
     <html lang={locale}>
       <body className={publicSans.className + " bg-body-color"}>
         <LoadingSpinner />
+        <ToastContainer style={{ marginTop: "50px" }} autoClose={3000} />
+
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>
             <NextTopLoader
@@ -43,7 +46,6 @@ export default async function RootLayout({ children }) {
               speed={500}
               showSpinner={false}
             />
-            <ToastContainer style={{ marginTop: "100px" }} autoClose={3000} />
             {children}
           </NextIntlClientProvider>
         </StoreProvider>

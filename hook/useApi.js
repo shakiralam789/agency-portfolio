@@ -1,3 +1,4 @@
+import { handleErrorMessage, handleSuccessMessage } from "@/utilities/helper";
 import { useCallback, useState } from "react";
 
 export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
@@ -39,11 +40,15 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
         }
 
         const responseData = await response.json();
+
+        handleSuccessMessage(responseData, method, url);
+
         onSuccess?.(responseData);
         return responseData;
       } catch (error) {
-        // onError?.(error);
-        // return { error: error?.message };
+        onError?.(error);
+        handleErrorMessage(error, method, url);
+        return { error: error?.message };
       } finally {
         setProcessing(false);
       }

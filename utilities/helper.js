@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 export function extractDate(dateString) {
   return dateString.split("T")[0];
 }
@@ -115,4 +117,53 @@ export default function getCookie(name) {
   const parts = value.split(`; ${name}=`);
   if (parts.length === 2) return parts.pop().split(";").shift();
   return null;
+}
+
+export const notAllRoute = [
+  "login",
+  "logout",
+  "register",
+  "forgot-password",
+  "reset-password",
+];
+
+let notAllowedRoutePrefix = (path) => {
+  return notAllRoute.includes(path);
+};
+
+export function handleSuccessMessage(response, method, url) {
+  if (
+    !response ||
+    method.toUpperCase() == "GET" ||
+    notAllowedRoutePrefix(url.replace("/api/v1/", ""))
+  ) {
+    return;
+  }
+
+  const successMessage = response?.message;
+
+  if (successMessage) {
+    toast.success(successMessage);
+  } else {
+    toast.success("Operation is successful");
+  }
+}
+
+export function handleErrorMessage(error, method, url = "") {
+
+  if (!error || method.toUpperCase() == "GET") {
+    // if (url != "/api/v1/profile") window.location.href = "/not-found";
+    return;
+  }
+  const errorMessage =
+    error?.response?.data?.error ||
+    error?.response?.data?.message ||
+    error?.message ||
+    error ||
+    "";
+  if (errorMessage) {
+    toast.error(errorMessage);
+  } else {
+    toast.error("An error occurred, please try again.");
+  }
 }

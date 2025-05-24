@@ -16,7 +16,7 @@ export default function Banner() {
   const bgGradient2Ref = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" }, delay: 0.8 });
+    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
 
     gsap.set(
       [

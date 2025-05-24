@@ -14,7 +14,12 @@ const timezones = moment.tz.names().map((zone) => ({
   label: zone,
 }));
 
-export default function SelectDataTime({ setIsDetails, data, setData }) {
+export default function SelectDataTime({
+  setIsDetails,
+  data,
+  setData,
+  closeAnim,
+}) {
   const [isMounted, setIsMounted] = useState(false);
   const handleTimezoneChange = (option) => {
     setData({ ...data, timezone: option.value });
@@ -51,12 +56,12 @@ export default function SelectDataTime({ setIsDetails, data, setData }) {
           menuPlacement="top"
         />
       </div>
-      <Button
-        onClick={() => setIsDetails(true)}
-        className="mt-5 text-white px-10 hover:text-white font-medium hover:bg-dark-green hover:border-dark-green"
-      >
-        Next
-      </Button>
+      <div className="flex gap-2 mt-5">
+        <Button variant="stroke" onClick={closeAnim}>
+          Close
+        </Button>
+        <Button onClick={() => setIsDetails(true)}>Next</Button>
+      </div>
     </>
   );
 }
