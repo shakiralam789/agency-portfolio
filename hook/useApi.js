@@ -3,7 +3,7 @@ import { useCallback, useState } from "react";
 
 export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
   const [processing, setProcessing] = useState(false);
-  const [apiErrors, setApiErrors] = useState(null);
+  const [apiErrors, setApiErrors] = useState({});
 
   const request = useCallback(
     async (method, url, options = {}, onAction = {}) => {

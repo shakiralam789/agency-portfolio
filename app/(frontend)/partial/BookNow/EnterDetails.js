@@ -13,14 +13,12 @@ export default function EnterDetails({
   setData,
   closeAnim,
 }) {
-  const [errors, setErrors] = useState([]);
   const [loading, setLoading] = useState(false);
 
-  const { post } = useApi();
+  const { post, apiErrors } = useApi();
 
   async function handleSubmit(e) {
     e.preventDefault();
-    setErrors([]);
     setLoading(true);
     let guest_email = data.guest_email;
     if (guest_email.length > 0) {
@@ -39,9 +37,6 @@ export default function EnterDetails({
         },
         onError: (error) => {
           setLoading(false);
-          if (error?.response?.data?.errors) {
-            setErrors(error.response.data.errors);
-          }
         },
       }
     );
@@ -57,7 +52,7 @@ export default function EnterDetails({
             value={data.name || ""}
             onChange={(e) => setData({ ...data, name: e.target.value })}
           />
-          <ErrorMsg message={errors?.name} />
+          <ErrorMsg message={apiErrors?.name} />
         </div>
         <div>
           <Label className="required">Email</Label>
@@ -67,7 +62,7 @@ export default function EnterDetails({
             onChange={(e) => setData({ ...data, email: e.target.value })}
             type="email"
           />
-          <ErrorMsg message={errors?.email} />
+          <ErrorMsg message={apiErrors?.email} />
         </div>
         <div>
           <Label>Guest Email (s)</Label>
@@ -101,9 +96,9 @@ export default function EnterDetails({
                     type="email"
                   />
                 </div>
-                {errors[`guest_email.${index}`] &&
-                  errors[`guest_email.${index}`][0] && (
-                    <ErrorMsg message={errors[`guest_email.${index}`][0]} />
+                {apiErrors[`guest_email.${index}`] &&
+                  apiErrors[`guest_email.${index}`][0] && (
+                    <ErrorMsg message={apiErrors[`guest_email.${index}`][0]} />
                   )}
               </div>
             ))}
@@ -136,7 +131,7 @@ export default function EnterDetails({
             onChange={(e) => setData({ ...data, message: e.target.value })}
           />
 
-          <ErrorMsg message={errors.message} />
+          <ErrorMsg message={apiErrors?.message} />
 
           <p className="font-16 text-para mt-2">
             By proceeding, you confirm that you have read and agree to

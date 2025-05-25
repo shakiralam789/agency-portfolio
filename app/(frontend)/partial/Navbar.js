@@ -89,7 +89,7 @@ const Navbar = () => {
       {/* Mobile Menu */}
       {isOpen && (
         <div className="md:hidden absolute top-16 left-0 right-0 bg-white z-10 shadow-md">
-          <div className="flex flex-col space-y-3 px-6 py-4">
+          <div className="flex flex-col items-center space-y-3 px-6 py-4">
             {navItems.map((item) => (
               <Link
                 key={item.section}

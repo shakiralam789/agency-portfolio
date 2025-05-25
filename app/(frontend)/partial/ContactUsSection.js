@@ -197,10 +197,10 @@ export default function ContactForm() {
                 height={500}
               />
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-y-6 2xl:gap-y-8 gap-x-4 2xl:gap-x-6">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-6 2xl:gap-y-8 gap-x-4 2xl:gap-x-6">
                   {/* Full Name */}
-                  <div className="col-span-2">
-                    <Label>Full Name</Label>
+                  <div className="sm:col-span-2">
+                    <Label className="required">Full Name</Label>
                     <TextField
                       {...register("full_name", {
                         required: "name is required",
@@ -209,7 +209,7 @@ export default function ContactForm() {
                     />
                     <ErrorMsg message={errors?.full_name?.message} />
                   </div>
-                  <div className="col-span-2 md:col-span-1">
+                  <div className="sm:col-span-1">
                     <Label>Company Name</Label>
                     <TextField
                       {...register("company_name")}
@@ -219,7 +219,7 @@ export default function ContactForm() {
                   </div>
 
                   {/* Email */}
-                  <div className="col-span-2 md:col-span-1">
+                  <div className="sm:col-span-1">
                     <Label>Email</Label>
                     <TextField
                       {...register("email", {
@@ -239,6 +239,7 @@ export default function ContactForm() {
                     <Controller
                       name="service_type"
                       control={control}
+                      rules={{ required: "Service Type is required" }}
                       render={({ field }) => (
                         <>
                           <CustomSelect
@@ -258,10 +259,15 @@ export default function ContactForm() {
 
                   <div>
                     <Label>project budget</Label>
-                    <TextField
-                      {...register("project_budget")}
-                      placeholder={"Enter project budget"}
-                    />
+                    <div className="relative">
+                      <TextField
+                        {...register("project_budget")}
+                        placeholder={"Enter project budget"}
+                        className="pr-8 2xl:pr-10"
+                      />
+                      <span className="font-16 absolute top-1/2 right-3 -translate-y-1/2">$</span>
+
+                    </div>
                     <ErrorMsg
                       message={
                         errors?.project_budget?.message ||
@@ -271,7 +277,7 @@ export default function ContactForm() {
                   </div>
 
                   {/* Project Details */}
-                  <div className="col-span-2">
+                  <div className="sm:col-span-2">
                     <Label>Project Details</Label>
                     <TextArea
                       rows="4"
@@ -283,7 +289,7 @@ export default function ContactForm() {
                     <ErrorMsg message={errors?.project_details?.message} />
                   </div>
 
-                  <div className="col-span-2 flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
+                  <div className="sm:col-span-2 flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
                     <button type="submit">
                       <Button>Submit form</Button>
                     </button>
