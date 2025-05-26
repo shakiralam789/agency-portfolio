@@ -42,7 +42,7 @@ export default function EnterDetails({
     );
   }
   return (
-    <form className="py-6">
+    <form className="py-6" onSubmit={handleSubmit}>
       <h2 className="font-30 text-dark2 capitalize mb-4">Enter Details</h2>
       <div className="grid grid-cols-1 gap-y-4 2xl:gap-y-6">
         <div>
@@ -140,18 +140,14 @@ export default function EnterDetails({
       </div>
       <div className="flex items-center gap-4 mt-5">
         <Button
-          // type="button"
+          type="button"
           variant="stroke"
           onClick={() => setIsDetails(false)}
         >
           Back
         </Button>
-        <Button
-          disabled={loading}
-          // type="button"
-          onClick={handleSubmit}
-        >
-          {loading ? "Processing" : "Schedule Event"}
+        <Button disabled={loading} isProcessing={loading} type="submit">
+          Schedule Event
         </Button>
       </div>
     </form>

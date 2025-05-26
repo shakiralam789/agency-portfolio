@@ -105,9 +105,12 @@ export const Button = ({
 }) => {
   const { pending } = useFormStatus();
 
+  const disabledClasses = "opacity-90 cursor-not-allowed";
+
   // Keep all your existing classes
-  const baseClasses =
-    "cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none";
+  const baseClasses = `${isProcessing ? "relative pointer-events-none" : ""} ${
+    disabled ? disabledClasses : ""
+  } cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none`;
 
   const variantClasses = {
     primary:
@@ -122,19 +125,16 @@ export const Button = ({
     edit: "bg-white text-primary-dark hover:bg-gray-50 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
   };
 
-  const disabledClasses =
-    "opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200 border-gray-300";
-
-  // Modify to remove border classes from variantClasses, as we'll handle those separately
   const buttonClasses = cn(
     baseClasses,
-    disabled ? disabledClasses : variantClasses[variant],
+    variantClasses[variant],
     fullWidth ? "w-full" : "",
     className
   );
 
   // Determine if this variant needs a border
-  const needsBorder = ['stroke', 'stroke-icon', 'edit'].includes(variant) && !disabled;
+  const needsBorder =
+    ["stroke", "stroke-icon", "edit"].includes(variant) && !disabled;
 
   let displayIcon = icon;
 
@@ -174,7 +174,7 @@ export const Button = ({
           cornerSmoothing={0.8}
           className="absolute inset-0 bg-gray-300" // Border color from your original styling
         />
-        
+
         {/* Content Squircle (slightly smaller) */}
         <Squircle
           as={Element}
@@ -184,9 +184,13 @@ export const Button = ({
           {...additionalProps}
           {...props}
         >
-          <span className={`flex items-center gap-2 ${
-            pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}>
+          <span
+            className={`flex items-center gap-2 ${
+              pending || isProcessing
+                ? "opacity-0 pointer-events-none"
+                : "opacity-100"
+            }`}
+          >
             {content}
           </span>
           {(pending || isProcessing) && (
@@ -204,7 +208,7 @@ export const Button = ({
     }
     return renderBorderedButton("button", { type, onClick, disabled });
   }
-  
+
   // For variants without border (your original implementation)
   if (href && !disabled) {
     if (href.startsWith("/") || href.startsWith("#")) {
@@ -219,9 +223,13 @@ export const Button = ({
           rel={finalRel}
           {...props}
         >
-          <span className={`flex items-center gap-2 ${
-            pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
-          }`}>
+          <span
+            className={`flex items-center gap-2 ${
+              pending || isProcessing
+                ? "opacity-0 pointer-events-none"
+                : "opacity-100"
+            }`}
+          >
             {content}
           </span>
           {(pending || isProcessing) && (
@@ -242,9 +250,13 @@ export const Button = ({
         rel={finalRel}
         {...props}
       >
-        <span className={`flex items-center gap-2 ${
-          pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
-        }`}>
+        <span
+          className={`flex items-center gap-2 ${
+            pending || isProcessing
+              ? "opacity-0 pointer-events-none"
+              : "opacity-100"
+          }`}
+        >
           {content}
         </span>
         {(pending || isProcessing) && (
@@ -262,11 +274,16 @@ export const Button = ({
       disabled={disabled}
       type={type}
       onClick={onClick}
+      as="button"
       {...props}
     >
-      <span className={`flex items-center gap-2 ${
-        pending || isProcessing ? "opacity-0 pointer-events-none" : "opacity-100"
-      }`}>
+      <span
+        className={`flex items-center gap-2 ${
+          pending || isProcessing
+            ? "opacity-0 pointer-events-none"
+            : "opacity-100"
+        }`}
+      >
         {content}
       </span>
       {(pending || isProcessing) && (
@@ -288,9 +305,11 @@ export const IconButton = ({
   type = "button",
   ...props
 }) => {
+  const disabledClasses = "opacity-50 cursor-not-allowed";
+
   // Base classes for all icon buttons
   const baseClasses =
-    "cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none";
+    `${disabled ? disabledClasses : ""} cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none`;
 
   // Classes for different button variants
   const variantClasses = {
@@ -304,18 +323,12 @@ export const IconButton = ({
   };
 
   // Classes for disabled state
-  const disabledClasses =
-    "opacity-50 cursor-not-allowed bg-gray-200 text-gray-500 hover:bg-gray-200";
 
   // Combined classes based on props
-  const buttonClasses = cn(
-    baseClasses,
-    disabled ? disabledClasses : variantClasses[variant],
-    className
-  );
+  const buttonClasses = cn(baseClasses, variantClasses[variant], className);
 
   // Determine if this variant needs a border
-  const needsBorder = variant === 'stroke' && !disabled;
+  const needsBorder = variant === "stroke" && !disabled;
 
   // Set correct rel attribute for external links that open in new tab
   const finalRel = target === "_blank" ? "noopener noreferrer" : rel;
@@ -330,7 +343,7 @@ export const IconButton = ({
           cornerSmoothing={0.8}
           className="absolute inset-0 bg-gray-300" // Border color from your original styling
         />
-        
+
         {/* Content Squircle (slightly smaller) */}
         <Squircle
           as={Element}
@@ -353,7 +366,7 @@ export const IconButton = ({
     }
     return renderBorderedIconButton("button", { type, onClick, disabled });
   }
-  
+
   // For variants without border, use standard Squircle
   if (href && !disabled) {
     if (href.startsWith("/") || href.startsWith("#")) {

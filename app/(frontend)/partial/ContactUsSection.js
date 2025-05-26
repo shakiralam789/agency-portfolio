@@ -37,6 +37,7 @@ export default function ContactForm() {
     handleSubmit,
     apiErrors,
     reset,
+    processing,
   } = useForm({
     full_name: "",
     email: "",
@@ -265,8 +266,9 @@ export default function ContactForm() {
                         placeholder={"Enter project budget"}
                         className="pr-8 2xl:pr-10"
                       />
-                      <span className="font-16 absolute top-1/2 right-3 -translate-y-1/2">$</span>
-
+                      <span className="font-16 absolute top-1/2 right-3 -translate-y-1/2">
+                        $
+                      </span>
                     </div>
                     <ErrorMsg
                       message={
@@ -290,9 +292,13 @@ export default function ContactForm() {
                   </div>
 
                   <div className="sm:col-span-2 flex flex-wrap items-center justify-center md:justify-start gap-4 mt-2">
-                    <button type="submit">
-                      <Button>Submit form</Button>
-                    </button>
+                    <Button
+                      disabled={processing}
+                      type="submit"
+                      isProcessing={processing}
+                    >
+                      Submit form
+                    </Button>
                     <span className="text-gray-500">Or</span>
                     <Button onClick={openBookNow}>Book a direct call</Button>
                   </div>
