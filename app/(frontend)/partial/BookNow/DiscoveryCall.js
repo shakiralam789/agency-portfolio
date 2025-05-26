@@ -82,9 +82,8 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
 
                   <P className="text-justify">
                     If you have any&nbsp;queries,&nbsp;please email us at
-                    raquib@riple.com.
+                    <span className="px-2 text-green-default">nuehva@gmail.com</span>.
                   </P>
-                  <p className="text-green-default">nuehva@gmail.com </p>
                 </div>
               </div>
             </div>

@@ -53,7 +53,14 @@ export default function TestimonialSlider() {
   const nextRef = useRef(null);
 
   return (
-    <section id="testimonials" className="overflow-hidden">
+    <section id="testimonials" className="relative overflow-hidden">
+      <Image
+        className="absolute top-0 left-0 w-full -z-10 h-full"
+        src={"/images/testimonial/testimonial-bg.png"}
+        alt="ServiceBackground"
+        width={1920}
+        height={1080}
+      />
       <div className="container mx-auto px-4 !py-16 2xl:!py-20 z-10 relative">
         <Image
           src={"/images/map.png"}

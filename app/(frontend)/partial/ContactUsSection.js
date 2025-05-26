@@ -168,7 +168,7 @@ export default function ContactForm() {
               <br />
               Let's get started
             </Title>
-            <P className="text-gray-600 mb-8 max-w-lg mx-auto md:mx-0">
+            <P className="mb-8 max-w-lg mx-auto md:mx-0">
               We'll schedule a call to discuss your idea. After discovery
               sessions, we'll send a proposal, and upon approval, we'll get
               started

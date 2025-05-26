@@ -294,7 +294,7 @@ const ServicesSection = () => {
       ref={sectionRef}
       className="relative overflow-hidden"
     >
-      <div className="absolute top-0 left-0 w-full h-full">
+      <div className="absolute top-0 left-0 w-full">
         <Image
           src={"/images/service-bg.jpg"}
           alt="Service Background"

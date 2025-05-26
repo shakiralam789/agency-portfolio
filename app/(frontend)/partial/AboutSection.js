@@ -72,7 +72,7 @@ export default function AboutSection() {
             <Title className="mt-3 mb-8">
               Reason Behind Choosing
               <Image
-                className="mt-3 w-36"
+                className="mt-3 w-24 sm:w-36"
                 src="/images/logo.png"
                 width={1920}
                 height={1080}

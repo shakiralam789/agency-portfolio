@@ -2,12 +2,17 @@
 
 // components/Navbar.jsx
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import Button from "@/components/form/Button";
 import Logo from "@/components/Logo";
+import DiscoveryCall from "./BookNow/DiscoveryCall";
+import gsap from "gsap";
+import { PhoneIcon } from "@heroicons/react/24/outline";
 
 const Navbar = () => {
+  const [isBookNowOpen, setIsBookNowOpen] = useState(false);
+  const bookNowRef = useRef(null);
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -23,6 +28,43 @@ const Navbar = () => {
     // { label: "Our Courses", section: "courses" },
   ];
 
+  function openBookNow() {
+    setIsBookNowOpen(true);
+  }
+
+  function closeAnim() {
+    document.body.style.overflow = "auto";
+    if (bookNowRef.current) {
+      gsap.to(bookNowRef.current, {
+        opacity: 0,
+        duration: 0.5,
+        ease: "power4.out",
+        onComplete: () => {
+          setIsBookNowOpen(false);
+        },
+      });
+    }
+  }
+
+  function openAnim() {
+    document.body.style.overflow = "hidden";
+    if (bookNowRef.current) {
+      gsap.fromTo(
+        bookNowRef.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 0.5, ease: "power4.out" }
+      );
+    }
+  }
+
+  useEffect(() => {
+    if (isBookNowOpen) {
+      openAnim();
+    } else {
+      closeAnim();
+    }
+  }, [isBookNowOpen]);
+
   return (
     <nav className="h-header-height flex items-center fixed top-0 left-0 z-40 w-full bg-white shadow-sm">
       {/* Logo */}
@@ -31,7 +73,7 @@ const Navbar = () => {
           href="/"
           className="cursor-pointer flex items-center h-header-height overflow-hidden"
         >
-          <Logo className="-ml-9"/>
+          <Logo className="-ml-9" />
         </Link>
 
         {/* Desktop Navigation */}
@@ -49,8 +91,18 @@ const Navbar = () => {
               {item.label}
             </a>
           ))}
-          <Button href={"#contact"}>Contact us</Button>
+
+          <Button onClick={openBookNow} className="flex items-center gap-2">
+            <PhoneIcon className="size-4 2xl:size-5" /> <span>Book a call</span>
+          </Button>
         </div>
+        {isBookNowOpen && (
+          <DiscoveryCall
+            ref={bookNowRef}
+            isBookNowOpen={isBookNowOpen}
+            closeAnim={closeAnim}
+          ></DiscoveryCall>
+        )}
 
         {/* Mobile menu button */}
         <div className="md:hidden flex items-center">
@@ -104,8 +156,10 @@ const Navbar = () => {
                 {item.label}
               </Link>
             ))}
-            <Button href={"#contact"}>Contact us</Button>
-            
+            <Button onClick={openBookNow} className="flex items-center gap-2">
+              <PhoneIcon className="size-4 2xl:size-5" />{" "}
+              <span>Book a call</span>
+            </Button>
           </div>
         </div>
       )}

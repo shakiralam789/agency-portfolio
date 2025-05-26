@@ -111,7 +111,7 @@ export const Button = ({
 
   const variantClasses = {
     primary:
-      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-primary-green focus:ring-offset-2",
+      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
@@ -119,7 +119,7 @@ export const Button = ({
     ghost: "bg-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50",
     "stroke-icon":
       "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
-    edit: "bg-white text-primary-dark hover:bg-gray-50 focus:ring-2 focus:ring-primary-green focus:ring-offset-2",
+    edit: "bg-white text-primary-dark hover:bg-gray-50 focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
   };
 
   const disabledClasses =
@@ -295,7 +295,7 @@ export const IconButton = ({
   // Classes for different button variants
   const variantClasses = {
     primary:
-      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-primary-green focus:ring-offset-2",
+      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
