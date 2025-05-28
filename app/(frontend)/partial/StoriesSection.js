@@ -142,7 +142,7 @@ export default function StatsSection() {
     <section
       ref={sectionRef}
       id="stories"
-      className="py-20 px-4 text-center relative"
+      className="py-16 md:py-24 px-4 text-center relative"
     >
       <div className="container">
         <h2 className="font-48 font-extrabold text-primary-dark mb-12">

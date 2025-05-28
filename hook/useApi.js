@@ -13,33 +13,45 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
 
       try {
         const isFormData = options.body instanceof FormData;
+        const token = localStorage.getItem("token");
+
         const fetchOptions = {
           method,
+          headers: {
+            ...(token && { Authorization: `Bearer ${token}` }),
+            ...(!isFormData &&
+              method !== "GET" && {
+                "Content-Type": "application/json",
+                Accept: "application/json",
+              }),
+            ...options.headers,
+          },
           ...options,
         };
 
-        if (!isFormData && method !== "GET") {
-          fetchOptions.headers = {
-            "Content-Type": "application/json",
-            ...options.headers,
-          };
-          if (options.body) {
-            fetchOptions.body = JSON.stringify(options.body);
-          }
+        if (!isFormData && method !== "GET" && options.body) {
+          fetchOptions.body = JSON.stringify(options.body);
         }
 
         const response = await fetch(`${baseUrl}${url}`, fetchOptions);
 
-        if (!response.ok) {
-          const errorData = await response.json();
-          if (errorData.errors) {
-            setApiErrors(errorData.errors);
-            onError?.(errorData.errors);
-          }
-          throw new Error(errorData.message || `Error: ${response.status}`);
-        }
-
         const responseData = await response.json();
+
+        if (!response?.ok) {
+          if (responseData?.errors) {
+            setApiErrors(responseData.errors);
+            onError?.(responseData.errors);
+          }
+          if (responseData?.message) {
+            handleErrorMessage({
+              error: responseData,
+              statusCode: response.status,
+              method,
+              url,
+            });
+          }
+          return { error: responseData };
+        }
 
         handleSuccessMessage(responseData, method, url);
 
@@ -47,8 +59,13 @@ export default function useApi(baseUrl = process.env.NEXT_PUBLIC_API_URL) {
         return responseData;
       } catch (error) {
         onError?.(error);
-        handleErrorMessage(error, method, url);
-        return { error: error?.message };
+        handleErrorMessage({
+          error,
+          statusCode: error?.status || 500,
+          method,
+          url,
+        });
+        return { error: error?.message || "Something went wrong" };
       } finally {
         setProcessing(false);
       }

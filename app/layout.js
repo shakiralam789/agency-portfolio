@@ -36,7 +36,7 @@ export default async function RootLayout({ children }) {
     <html lang={locale}>
       <body className={publicSans.className + " bg-body-color"}>
         <LoadingSpinner />
-        <ToastContainer style={{ marginTop: "50px" }} autoClose={3000} />
+        <ToastContainer autoClose={5000} />
 
         <StoreProvider>
           <NextIntlClientProvider messages={messages}>

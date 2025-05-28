@@ -8,8 +8,18 @@
     padding: 0 15px;
 }
 
-html{
-    scroll-behavior: smooth;
+html {
+    scroll-padding-top: 68px; /* This accounts for the fixed header */
+    scrollbar-width: none;  /* Firefox */
+    -ms-overflow-style: none;  /* IE and Edge */
+}
+
+html::-webkit-scrollbar {
+    display: none;  /* Chrome, Safari, Opera */
+}
+
+body {
+    @apply overflow-x-hidden;
 }
 
 @layer components {
@@ -193,4 +203,18 @@ swiper-button-next,
 
 .Toastify__toast--success .Toastify__toast-icon svg {
   @apply !fill-green-400;
+}
+
+/* Book Now Modal Scrolling */
+.book-now-modal {
+  overscroll-behavior: none;
+}
+
+#book-now-modal-content {
+  position: relative;
+  overflow: hidden;
+}
+
+#book-now-modal-content [data-lenis-prevent] {
+  overscroll-behavior: contain;
 }

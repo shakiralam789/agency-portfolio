@@ -226,6 +226,10 @@ export default function ContactForm() {
                       {...register("email", {
                         required: "Email is required",
                         isEmail: "Please enter a valid email address",
+                        pattern: {
+                          value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+                          message: "Please enter a valid email address",
+                        },
                       })}
                       placeholder={"Enter your email"}
                     />

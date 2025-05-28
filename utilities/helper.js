@@ -149,21 +149,36 @@ export function handleSuccessMessage(response, method, url) {
   }
 }
 
-export function handleErrorMessage(error, method, url = "") {
-
+export function handleErrorMessage({ error, statusCode, method, url = "" }) {
   if (!error || method.toUpperCase() == "GET") {
     // if (url != "/api/v1/profile") window.location.href = "/not-found";
     return;
   }
-  const errorMessage =
-    error?.response?.data?.error ||
-    error?.response?.data?.message ||
-    error?.message ||
-    error ||
-    "";
-  if (errorMessage) {
-    toast.error(errorMessage);
-  } else {
-    toast.error("An error occurred, please try again.");
+
+  if (
+    [500, 501, 502, 503, 504, 505, 506, 507, 508, 509, 510, 511].includes(
+      statusCode
+    )
+  ) {
+    toast.error("Something went wrong.");
+    return;
   }
+
+  const errorMessage = error?.message;
+
+  if (statusCode == 401 || statusCode == 403 || statusCode == 419) {
+    if (statusCode == 401) {
+      toast.error(errorMessage || "User is not authorized");
+    } else if (statusCode == 403) {
+      toast.error(errorMessage || "Forbidden");
+    } else if (statusCode == 419) {
+      toast.error(errorMessage || "Expired session");
+    }
+    setTimeout(() => {
+      window.location.href = "/login";
+    }, 2000);
+    return;
+  }
+
+  toast.error(errorMessage || "An error occurred, please try again.");
 }
