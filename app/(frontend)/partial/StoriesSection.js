@@ -7,6 +7,8 @@ import Image from "next/image";
 
 export default function StatsSection() {
   const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const gridRef = useRef(null);
   const countWrapperRefs = useRef([]);
 
   // Ensure all numbers are displayed as at least double digits
@@ -20,123 +22,117 @@ export default function StatsSection() {
   useEffect(() => {
     if (typeof window === "undefined") return;
 
-    // Register ScrollTrigger plugin
     gsap.registerPlugin(ScrollTrigger);
 
-    // Create a high-performance GSAP context for better rendering
-    const ctx = gsap.context(() => {
-      // Set up the scroll trigger with optimal settings
-      ScrollTrigger.create({
+    // Create main timeline for section animation
+    const tl = gsap.timeline({
+      scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 75%", // Trigger slightly earlier for better perceived performance
-        onEnter: () => {
-          // Stagger the start times slightly for a more natural flow
-          countWrapperRefs.current.forEach((wrapper, index) => {
-            if (!wrapper) return;
-
-            // Get elements
-            const numElement = wrapper.querySelector(".stat-num");
-            const plusElement = wrapper.querySelector(".stat-plus");
-
-            if (!numElement || !plusElement) return;
-
-            // Parse the target value
-            const targetValue = parseInt(stats[index].value);
-
-            // Calculate optimal duration based on number size - tuned for smoothness
-            const baseDuration = 0.9; // Fast base duration
-            const durationScaleFactor = 0.3; // Additional time for emphasis on small numbers
-
-            // Weighted duration calculation for optimal visual rhythm
-            let duration = baseDuration;
-            if (targetValue <= 10) {
-              duration += durationScaleFactor * 2.5;
-            } else if (targetValue <= 30) {
-              duration += durationScaleFactor * 2;
-            } else if (targetValue <= 100) {
-              duration += durationScaleFactor * 1.5;
-            } else {
-              duration += durationScaleFactor * 0.8;
-            }
-
-            // Temporary counter object
-            const counter = { value: 0 };
-
-            // Add a tiny random delay to create natural staggering
-            const randomDelay = index * 0.15 + Math.random() * 0.1;
-
-            // MAIN ANIMATION: Count up with high-performance settings
-            gsap.to(counter, {
-              value: targetValue,
-              duration: duration,
-              delay: randomDelay,
-              ease: "power2.out", // Perfect balance of smoothness and character
-
-              // High-frequency updates for buttery smooth counting
-              onUpdate: () => {
-                // Format the number to ensure always double digits
-                const currentValue = Math.floor(counter.value);
-                numElement.textContent = formatNumberWithDoubleDigits(
-                  currentValue,
-                  stats[index].value
-                );
-              },
-
-              onComplete: () => {
-                // Always show the exact format specified in the stats array
-                numElement.textContent = stats[index].value;
-
-                // PLUS SIGN ANIMATION: Elegant fade in with subtle motion
-                gsap.fromTo(
-                  plusElement,
-                  {
-                    opacity: 0,
-                    scale: 0.7,
-                    x: -3,
-                  },
-                  {
-                    opacity: 1,
-                    scale: 1,
-                    x: 0,
-                    duration: 0.35,
-                    ease: "back.out(1.4)",
-                    onComplete: () => {
-                      // Add a subtle pulse effect for emphasis
-                      gsap.to(plusElement, {
-                        scale: 1.15,
-                        duration: 0.15,
-                        yoyo: true,
-                        repeat: 1,
-                        ease: "sine.inOut",
-                      });
-                    },
-                  }
-                );
-              },
-            });
-          });
-        },
-        once: true,
-      });
+        start: "top 60%",
+        end: "bottom bottom",
+        toggleActions: "play reverse play reverse",
+        scrub: 1
+      }
     });
 
-    // Helper function to ensure double-digit formatting
-    function formatNumberWithDoubleDigits(num, originalFormat) {
-      // Check if the original format has a leading zero
-      const hasLeadingZero = originalFormat.startsWith("0");
-
-      // For single-digit numbers
-      if (num < 10) {
-        return hasLeadingZero ? `0${num}` : `${num}`;
+    // Animate title and grid
+    tl.fromTo(titleRef.current,
+      {
+        opacity: 0,
+        y: 50
+      },
+      {
+        opacity: 1,
+        y: 0,
+        ease: "power2.inOut"
       }
+    );
 
-      // For double digits and above
-      return num.toString();
+    tl.fromTo(gridRef.current,
+      {
+        opacity: 0,
+        y: 50
+      },
+      {
+        opacity: 1,
+        y: 0,
+        ease: "power2.inOut"
+      },
+      "<+=0.2"
+    );
+
+    // Create separate timeline for counter animations that only runs once
+    ScrollTrigger.create({
+      trigger: sectionRef.current,
+      start: "top 60%",
+      onEnter: () => {
+        countWrapperRefs.current.forEach((wrapper, index) => {
+          if (!wrapper) return;
+
+          const numElement = wrapper.querySelector(".stat-num");
+          const plusElement = wrapper.querySelector(".stat-plus");
+          if (!numElement || !plusElement) return;
+
+          const targetValue = parseInt(stats[index].value);
+          const counter = { value: 0 };
+          const delay = index * 0.15;
+
+          gsap.to(counter, {
+            value: targetValue,
+            duration: 1.5,
+            delay,
+            ease: "power2.out",
+            onUpdate: () => {
+              const currentValue = Math.floor(counter.value);
+              numElement.textContent = formatNumberWithDoubleDigits(
+                currentValue,
+                stats[index].value
+              );
+            },
+            onComplete: () => {
+              numElement.textContent = stats[index].value;
+              gsap.fromTo(
+                plusElement,
+                {
+                  opacity: 0,
+                  scale: 0.7,
+                  x: -3,
+                },
+                {
+                  opacity: 1,
+                  scale: 1,
+                  x: 0,
+                  duration: 0.35,
+                  ease: "back.out(1.4)",
+                }
+              );
+            },
+          });
+        });
+      },
+      once: true,
+    });
+
+    return () => {
+      if (ScrollTrigger.getAll().length) {
+        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+      }
+    };
+  }, []);
+
+  // Helper function to ensure double-digit formatting
+  function formatNumberWithDoubleDigits(num, originalFormat) {
+    // Check if the original format has a leading zero
+    const hasLeadingZero = originalFormat.startsWith("0");
+
+    // For single-digit numbers
+    if (num < 10) {
+      return hasLeadingZero ? `0${num}` : `${num}`;
     }
 
-    // Clean up all animations on unmount
-    return () => ctx.revert();
-  }, []);
+    // For double digits and above
+    return num.toString();
+  }
 
   return (
     <section
@@ -145,10 +141,16 @@ export default function StatsSection() {
       className="py-16 md:py-24 px-4 text-center relative"
     >
       <div className="container">
-        <h2 className="font-48 font-extrabold text-primary-dark mb-12">
+        <h2 
+          ref={titleRef}
+          className="font-48 font-extrabold text-primary-dark mb-12"
+        >
           Our Stories
         </h2>
-        <div className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8">
+        <div 
+          ref={gridRef}
+          className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+        >
           <Image
             className="w-36 absolute top-1/2 -left-8 -translate-y-1/2"
             src={"/images/stories/stories-left.png"}

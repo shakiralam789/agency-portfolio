@@ -113,12 +113,12 @@ export default function ContactForm() {
 
     gsap.set(leftContentRef.current, {
       opacity: 0,
-      x: -50,
+      x: -100,
     });
 
     gsap.set(rightContentRef.current, {
       opacity: 0,
-      x: 50,
+      x: 100,
     });
 
     const tl = gsap.timeline({

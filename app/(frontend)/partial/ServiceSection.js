@@ -97,6 +97,25 @@ const ServicesSection = () => {
       const nextSection =
         document.querySelector("#services")?.nextElementSibling;
 
+      // Set initial state for header
+      gsap.set(headerRef.current, {
+        opacity: 0,
+        y: 100
+      });
+
+      // Animate header when entering viewport
+      gsap.to(headerRef.current, {
+        opacity: 1,
+        y: 0,
+        duration: 1,
+        ease: "power2.out",
+        scrollTrigger: {
+          trigger: headerRef.current,
+          start: "top 60%",
+          toggleActions: "play none none none"
+        }
+      });
+
       const setupScroll = () => {
         const cards = gsap.utils.toArray(".service-card");
         const servicesContainer = document.getElementById("services-container");
@@ -179,9 +198,9 @@ const ServicesSection = () => {
     <section
       id="services"
       ref={sectionRef}
-      className="relative overflow-hidden"
+      className="relative overflow-hidden py-16 md:py-24"
     >
-      <div id="service-bg" className="absolute top-0 left-0 w-full h-[150vh]">
+      <div id="service-bg" className="absolute top-0 left-0 w-full h-screen">
         <Image
           src={"/images/service-bg.jpg"}
           alt="Service Background"
@@ -199,12 +218,12 @@ const ServicesSection = () => {
         />
       </div>
 
-      <div id="services-container" className="relative z-10 container py-12 md:py-20">
+      <div id="services-container" className="relative z-10 container">
         <div
-          className="flex flex-col md:flex-row items-end md:justify-between mb-8"
+          className="flex flex-wrap items-end justify-between mb-8"
           ref={headerRef}
         >
-          <div className="lg:w-1/2">
+          <div className="w-full sm:w-8/12 lg:w-1/2">
             <p className="text-green-default font-20 font-medium mb-2">
               OUR SERVICES
             </p>

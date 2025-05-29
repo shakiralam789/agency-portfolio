@@ -1,6 +1,6 @@
 "use client";
 
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import cn from "@/utilities/cn";
 import SpinAnim from "../animation/SpinAnim";
@@ -104,13 +104,18 @@ export const Button = ({
   ...props
 }) => {
   const { pending } = useFormStatus();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
 
   const disabledClasses = "opacity-90 cursor-not-allowed";
 
   // Keep all your existing classes
   const baseClasses = `${isProcessing ? "relative pointer-events-none" : ""} ${
     disabled ? disabledClasses : ""
-  } cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none`;
+  } cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none ${!isHydrated ? "rounded-xl" : ""}`;
 
   const variantClasses = {
     primary:
@@ -172,7 +177,7 @@ export const Button = ({
         <Squircle
           cornerRadius={12}
           cornerSmoothing={0.8}
-          className="absolute inset-0 bg-gray-300" // Border color from your original styling
+          className={`${!isHydrated ? "rounded-xl" : ""} absolute inset-0 bg-gray-300`} // Border color from your original styling
         />
 
         {/* Content Squircle (slightly smaller) */}
@@ -305,11 +310,18 @@ export const IconButton = ({
   type = "button",
   ...props
 }) => {
+  const { pending } = useFormStatus();
+  const [isHydrated, setIsHydrated] = useState(false);
+
+  useEffect(() => {
+    setIsHydrated(true);
+  }, []);
+
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   // Base classes for all icon buttons
   const baseClasses =
-    `${disabled ? disabledClasses : ""} cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none`;
+    `${disabled ? disabledClasses : ""} cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none ${!isHydrated ? "rounded-xl" : ""}`;
 
   // Classes for different button variants
   const variantClasses = {
@@ -341,7 +353,7 @@ export const IconButton = ({
         <Squircle
           cornerRadius={8}
           cornerSmoothing={0.8}
-          className="absolute inset-0 bg-gray-300" // Border color from your original styling
+          className={`${!isHydrated ? "rounded-xl" : ""} absolute inset-0 bg-gray-300 rounded-lg`} // Border color from your original styling
         />
 
         {/* Content Squircle (slightly smaller) */}

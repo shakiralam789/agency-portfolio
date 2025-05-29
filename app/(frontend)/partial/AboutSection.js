@@ -22,37 +22,49 @@ export default function AboutSection() {
 
     gsap.set(textContentRef.current, { 
       opacity: 0,
-      x: -50
+      x: -100
     });
     
     gsap.set(animationRef.current, { 
       opacity: 0,
-      x: 50
+      x: 100
     });
 
     const tl = gsap.timeline({
       scrollTrigger: {
         trigger: sectionRef.current,
-        start: "top 75%",
+        start: "top 60%",
         end: "bottom bottom",
-        toggleActions: "play none none none"
+        toggleActions: "play reverse play reverse",
+        scrub: 1
       }
     });
 
     // Animate both parts fading in
-    tl.to(textContentRef.current, {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      ease: "power3.out"
-    });
+    tl.fromTo(textContentRef.current,
+      {
+        opacity: 0,
+        x: -100
+      },
+      {
+        opacity: 1,
+        x: 0,
+        ease: "power2.inOut"
+      }
+    );
 
-    tl.to(animationRef.current, {
-      opacity: 1,
-      x: 0,
-      duration: 1,
-      ease: "power3.out"
-    }, "-=0.7"); // Start slightly before the first animation ends for a staggered effect
+    tl.fromTo(animationRef.current,
+      {
+        opacity: 0,
+        x: 100
+      },
+      {
+        opacity: 1,
+        x: 0,
+        ease: "power2.inOut"
+      },
+      "<+=0.2"
+    );
 
     // Cleanup function
     return () => {

@@ -1,5 +1,5 @@
 "use client";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
@@ -12,6 +12,8 @@ import ChevronLeft from "@/components/icons/ChevronLeft";
 import ChevronRight from "@/components/icons/ChevronRight";
 import P from "./P";
 import Quote from "@/components/icons/Quote";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 const testimonials = [
   {
@@ -51,9 +53,54 @@ const testimonials = [
 export default function TestimonialSlider() {
   const prevRef = useRef(null);
   const nextRef = useRef(null);
+  const sectionRef = useRef(null);
+  const headerRef = useRef(null);
+  const sliderRef = useRef(null);
+
+  useEffect(() => {
+    if (typeof window !== "undefined") {
+      gsap.registerPlugin(ScrollTrigger);
+    }
+
+    gsap.set([headerRef.current, sliderRef.current], {
+      opacity: 0,
+      y: 50
+    });
+
+    const tl = gsap.timeline({
+      scrollTrigger: {
+        trigger: sectionRef.current,
+        start: "top 50%",
+        end: "bottom 20%",
+        toggleActions: "play none none none",
+      },
+    });
+
+    // Header animation
+    tl.to(headerRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+    });
+
+    // Slider animation with slight delay
+    tl.to(sliderRef.current, {
+      opacity: 1,
+      y: 0,
+      duration: 1,
+      ease: "power3.out",
+    }, "-=0.7");
+
+    return () => {
+      if (typeof window !== "undefined" && ScrollTrigger.getAll().length) {
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
+      }
+    };
+  }, []);
 
   return (
-    <section id="testimonials" className="relative overflow-hidden">
+    <section ref={sectionRef} id="testimonials" className="relative overflow-hidden">
       <Image
         className="absolute top-0 left-0 w-full -z-10 h-full"
         src={"/images/testimonial/testimonial-bg.png"}
@@ -70,7 +117,7 @@ export default function TestimonialSlider() {
           className="absolute top-0 left-0 w-full"
         />
 
-        <div className="mb-12 relative flex flex-wrap justify-between items-end">
+        <div ref={headerRef} className="mb-12 relative flex flex-wrap justify-between items-end">
           <div>
             <Subtitle className="mb-2">TESTIMONIALS</Subtitle>
             <Title>
@@ -93,7 +140,7 @@ export default function TestimonialSlider() {
           </div>
         </div>
 
-        <div className="relative">
+        <div ref={sliderRef} className="relative">
           <Swiper
             modules={[Navigation]}
             spaceBetween={20}

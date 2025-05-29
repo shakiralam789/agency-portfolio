@@ -60,7 +60,7 @@ export default function Layout({ children }) {
   return (
     <div className="min-h-screen flex flex-col justify-between">
       <Navbar />
-      <main className="pt-header-height w-full flex-1 flex flex-wrap">
+      <main className="overflow-hidden pt-header-height w-full flex-1 flex flex-wrap">
         <div className="w-full">{children}</div>
       </main>
       <FooterSection />

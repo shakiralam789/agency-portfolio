@@ -4,6 +4,7 @@ import Button from "@/components/form/Button";
 import OutlinedHeading from "@/components/OutlinedHeading";
 import gsap from "gsap";
 import Image from "next/image";
+import { loadingPromise } from "@/components/animation/LoadingSpin";
 
 export default function Banner() {
   const bannerRef = useRef(null);
@@ -16,93 +17,108 @@ export default function Banner() {
   const bgGradient2Ref = useRef(null);
 
   useEffect(() => {
-    const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+    const startAnimation = async () => {
+      // Wait for loading to complete
+      await loadingPromise;
 
-    gsap.set(
-      [
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+
+      gsap.set(
+        [
+          taglineRef.current,
+          headingRef.current,
+          subheadingRef.current,
+          descriptionRef.current,
+          buttonsRef.current,
+        ],
+        {
+          opacity: 0,
+          y: 30,
+        }
+      );
+
+      gsap.set([bgGradient1Ref.current, bgGradient2Ref.current], {
+        opacity: 0,
+        scale: 0.8,
+      });
+
+      // Background gradients animation
+      tl.to([bgGradient1Ref.current, bgGradient2Ref.current], {
+        opacity: 1,
+        scale: 1,
+        duration: 1,
+        stagger: 0.2,
+      });
+
+      // Tag line animation
+      tl.to(
+        taglineRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=0.8"
+      );
+
+      // Main heading animation
+      tl.to(
+        headingRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=0.6"
+      );
+
+      // Subheading animation
+      tl.to(
+        subheadingRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=0.6"
+      );
+
+      // Description animation
+      tl.to(
+        descriptionRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=0.4"
+      );
+
+      // Buttons animation
+      tl.to(
+        buttonsRef.current,
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+        },
+        "-=0.4"
+      );
+    };
+
+    startAnimation();
+
+    // Cleanup function
+    return () => {
+      gsap.killTweensOf([
         taglineRef.current,
         headingRef.current,
         subheadingRef.current,
         descriptionRef.current,
         buttonsRef.current,
-      ],
-      {
-        opacity: 0,
-        y: 30,
-      }
-    );
-
-    gsap.set([bgGradient1Ref.current, bgGradient2Ref.current], {
-      opacity: 0,
-      scale: 0.8,
-    });
-
-    // Background gradients animation
-    tl.to([bgGradient1Ref.current, bgGradient2Ref.current], {
-      opacity: 1,
-      scale: 1,
-      duration: 1.5,
-      stagger: 0.2,
-    });
-
-    // Tag line animation
-    tl.to(
-      taglineRef.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-      },
-      "-=0.8"
-    );
-
-    // Main heading animation
-    tl.to(
-      headingRef.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-      },
-      "-=0.6"
-    );
-
-    // Subheading animation
-    tl.to(
-      subheadingRef.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-      },
-      "-=0.6"
-    );
-
-    // Description animation
-    tl.to(
-      descriptionRef.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-      },
-      "-=0.4"
-    );
-
-    // Buttons animation
-    tl.to(
-      buttonsRef.current,
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-      },
-      "-=0.4"
-    );
-
-    // Cleanup function
-    return () => {
-      tl.kill();
+        bgGradient1Ref.current,
+        bgGradient2Ref.current,
+      ]);
     };
   }, []);
 
