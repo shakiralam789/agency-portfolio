@@ -204,17 +204,3 @@ swiper-button-next,
 .Toastify__toast--success .Toastify__toast-icon svg {
   @apply !fill-green-400;
 }
-
-/* Book Now Modal Scrolling */
-.book-now-modal {
-  overscroll-behavior: none;
-}
-
-#book-now-modal-content {
-  position: relative;
-  overflow: hidden;
-}
-
-#book-now-modal-content [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}

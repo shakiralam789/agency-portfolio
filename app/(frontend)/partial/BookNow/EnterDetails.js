@@ -42,7 +42,7 @@ export default function EnterDetails({
     );
   }
   return (
-    <form className="py-6" onSubmit={handleSubmit}>
+    <form className="py-3 2xl:py-6" onSubmit={handleSubmit}>
       <h2 className="font-30 text-dark2 capitalize mb-4">Enter Details</h2>
       <div className="grid grid-cols-1 gap-y-4 2xl:gap-y-6">
         <div>
