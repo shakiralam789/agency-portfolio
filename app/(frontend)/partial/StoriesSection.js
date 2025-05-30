@@ -30,33 +30,36 @@ export default function StatsSection() {
         trigger: sectionRef.current,
         start: "top 60%",
         end: "bottom bottom",
-        toggleActions: "play reverse play reverse",
-        scrub: 1
-      }
+        toggleActions: "play none none none",
+
+        // scrub: 1,
+      },
     });
 
     // Animate title and grid
-    tl.fromTo(titleRef.current,
+    tl.fromTo(
+      titleRef.current,
       {
         opacity: 0,
-        y: 50
+        y: 50,
       },
       {
         opacity: 1,
         y: 0,
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       }
     );
 
-    tl.fromTo(gridRef.current,
+    tl.fromTo(
+      gridRef.current,
       {
         opacity: 0,
-        y: 50
+        y: 50,
       },
       {
         opacity: 1,
         y: 0,
-        ease: "power2.inOut"
+        ease: "power2.inOut",
       },
       "<+=0.2"
     );
@@ -115,7 +118,7 @@ export default function StatsSection() {
 
     return () => {
       if (ScrollTrigger.getAll().length) {
-        ScrollTrigger.getAll().forEach(trigger => trigger.kill());
+        ScrollTrigger.getAll().forEach((trigger) => trigger.kill());
       }
     };
   }, []);
@@ -141,13 +144,13 @@ export default function StatsSection() {
       className="py-16 md:py-24 px-4 text-center relative"
     >
       <div className="container">
-        <h2 
+        <h2
           ref={titleRef}
           className="font-48 font-extrabold text-primary-dark mb-12"
         >
           Our Stories
         </h2>
-        <div 
+        <div
           ref={gridRef}
           className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
         >
