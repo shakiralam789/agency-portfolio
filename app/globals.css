@@ -73,7 +73,7 @@ body {
     }
 
     .list,.list-with-icon {
-        @apply !leading-[100%] mb-1 2xl:mb-2 last:mb-0 last:2xl:mb-0 rounded-lg !block capitalize !cursor-pointer w-full text-left !text-[11px] lg:!text-xs 2xl:!text-[15px] !text-gray-700 hover:bg-gray-100 !px-2 !py-2 2xl:!px-2.5 2xl:!py-2.5;
+        @apply !leading-[100%] mb-1 2xl:mb-2 last:mb-0 last:2xl:mb-0 rounded-lg !block capitalize !cursor-pointer w-full text-left !text-[11px] lg:!text-xs 2xl:!text-lg text-gray-700 hover:bg-gray-100 !px-2 !py-2 2xl:!px-2.5 2xl:!py-2.5;
     }
     
     .list-with-icon{
@@ -139,11 +139,6 @@ body {
 
 .react-select-container > div > div{
     margin-left: 0 !important;
-}
-
-
-.list {
-    font-size: 11px !important;
 }
 
 .list.active,

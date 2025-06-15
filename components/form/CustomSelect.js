@@ -11,7 +11,9 @@ const CustomControl = ({ children, ...props }) => {
   return (
     <components.Control
       {...props}
-      className={`${selectProps.menuIsOpen ? "open" : ""} react-select-container !cursor-pointer field-base !rounded-lg !border-none`}
+      className={`${
+        selectProps.menuIsOpen ? "open" : ""
+      } react-select-container !cursor-pointer field-base !rounded-lg !border-none`}
     >
       {children}
     </components.Control>
@@ -20,14 +22,20 @@ const CustomControl = ({ children, ...props }) => {
 
 // Custom Menu component
 const CustomMenu = (props) => (
-  <components.Menu className="!px-1 2xl:!px-2 !py-0 2xl:!py-1 !rounded-xl" {...props}>
+  <components.Menu
+    className="lenis-prevent !px-1 2xl:!px-2 !py-0 2xl:!py-1 !rounded-xl"
+    {...props}
+  >
     {props.children}
   </components.Menu>
 );
 
 // Custom Option component
 const CustomOption = (props) => (
-  <components.Option {...props} className={`list ${props.isSelected ? "active" : ""}`}>
+  <components.Option
+    {...props}
+    className={`list ${props.isSelected ? "active" : ""}`}
+  >
     {props.children}
   </components.Option>
 );
@@ -37,7 +45,9 @@ const DropdownIndicator = (props) => {
   const { selectProps } = props;
   return (
     <components.DropdownIndicator
-      className={`${selectProps.menuIsOpen ? "open" : ""} dropdown-icon-container`}
+      className={`${
+        selectProps.menuIsOpen ? "open" : ""
+      } dropdown-icon-container`}
       {...props}
     >
       <span
@@ -76,7 +86,7 @@ export default function CustomSelect({
     () => options.find((option) => option.value === value) || null,
     [value, options]
   );
-  
+
   const [selectedOption, setSelectedOption] = useState(defaultOption);
 
   useEffect(() => {

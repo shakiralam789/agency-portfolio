@@ -1,6 +1,5 @@
 import { Public_Sans } from "next/font/google";
 
-import StoreProvider from "@/src/store/Provider";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 
@@ -37,18 +36,15 @@ export default async function RootLayout({ children }) {
       <body className={publicSans.className + " bg-body-color"}>
         <LoadingSpinner />
         <ToastContainer autoClose={5000} />
-
-        <StoreProvider>
-          <NextIntlClientProvider messages={messages}>
-            <NextTopLoader
-              color="#22c55e"
-              height={3}
-              speed={500}
-              showSpinner={false}
-            />
-            {children}
-          </NextIntlClientProvider>
-        </StoreProvider>
+        <NextIntlClientProvider messages={messages}>
+          <NextTopLoader
+            color="#22c55e"
+            height={3}
+            speed={500}
+            showSpinner={false}
+          />
+          {children}
+        </NextIntlClientProvider>
       </body>
     </html>
   );

@@ -126,10 +126,7 @@ export default function Banner() {
     <section
       id="home"
       ref={bannerRef}
-      style={{
-        minHeight: "calc(100vh - 68px)",
-      }}
-      className="relative py-16 w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
+      className="sm:min-h-[calc(100vh-68px)] relative py-16 w-full overflow-hidden flex items-center bg-gradient-to-br from-blue-50 via-pink-50 to-green-50"
     >
       <div className="w-8/12 sm:w-6/12 2xl:w-5/12 absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
         <Image

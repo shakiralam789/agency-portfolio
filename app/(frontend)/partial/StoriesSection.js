@@ -4,12 +4,14 @@ import React, { useEffect, useRef } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Image from "next/image";
+import StoriesLottie from "./lotties/Stories";
 
 export default function StatsSection() {
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const gridRef = useRef(null);
   const countWrapperRefs = useRef([]);
+  const lottieRefs = useRef([]);
 
   // Ensure all numbers are displayed as at least double digits
   const stats = [
@@ -98,12 +100,10 @@ export default function StatsSection() {
                 plusElement,
                 {
                   opacity: 0,
-                  scale: 0.7,
                   x: -3,
                 },
                 {
                   opacity: 1,
-                  scale: 1,
                   x: 0,
                   duration: 0.35,
                   ease: "back.out(1.4)",
@@ -152,7 +152,7 @@ export default function StatsSection() {
         </h2>
         <div
           ref={gridRef}
-          className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-8"
+          className="relative grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4"
         >
           <Image
             className="w-36 absolute top-1/2 -left-8 -translate-y-1/2"
@@ -178,19 +178,16 @@ export default function StatsSection() {
           {stats.map((stat, idx) => (
             <div
               key={idx}
-              className="mx-auto max-w-[400px] w-full relative aspect-square p-6 transform transition-transform duration-300 hover:scale-105"
+              className="card mx-auto max-w-[400px] w-full relative aspect-square transform transition-transform duration-300"
             >
-              <div className="absolute top-0 left-0 w-full h-full">
-                <Image
-                  src={"/images/stories/union.png"}
-                  width={400}
-                  height={400}
-                  alt={"unit"}
-                  className="w-full h-full"
+              <div className="absolute flex items-center justify-center top-0 left-2 w-full h-full pointer-events-none">
+                <StoriesLottie
+                  onRef={(ref) => (lottieRefs.current[idx] = ref)}
+                  delay={idx * 0.8}
                 />
               </div>
-              <div className="relative flex flex-col justify-center h-full px-2 py-8 2xl:py-12">
-                <div className="absolute top-0 left-0 w-full h-full">
+              <div className="relative flex flex-col justify-center h-full py-8 2xl:py-12">
+                <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] h-[70%]">
                   <Image
                     src={"/images/stories/rectangle-5.png"}
                     width={400}

@@ -8,7 +8,7 @@ import Button from "@/components/form/Button";
 import Logo from "@/components/Logo";
 import DiscoveryCall from "./BookNow/DiscoveryCall";
 import gsap from "gsap";
-import { PhoneIcon } from "@heroicons/react/24/outline";
+import { PhoneIcon } from "@heroicons/react/24/solid";
 
 const Navbar = () => {
   const [isBookNowOpen, setIsBookNowOpen] = useState(false);
