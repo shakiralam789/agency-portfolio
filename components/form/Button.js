@@ -419,50 +419,77 @@ export const IconButton = ({
   if (href && !disabled) {
     if (href.startsWith("/") || href.startsWith("#")) {
       return (
+        <div className="relative inline-block">
+          <Squircle
+            cornerRadius={8}
+            cornerSmoothing={0.8}
+            className={`${
+              !isHydrated ? "rounded-xl" : ""
+            } absolute inset-0 bg-gray-300`} // Border color from your original styling
+          />
+          <Squircle
+            as={Link}
+            href={href}
+            cornerRadius={7.5}
+            cornerSmoothing={0.8}
+            className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+            target={target}
+            rel={finalRel}
+            {...props}
+          >
+            {icon}
+          </Squircle>
+        </div>
+      );
+    }
+
+    return (
+      <div className="relative inline-block">
         <Squircle
-          as={Link}
-          href={href}
           cornerRadius={8}
           cornerSmoothing={0.8}
-          className={buttonClasses}
+          className={`${
+            !isHydrated ? "rounded-xl" : ""
+          } absolute inset-0 bg-gray-300`} // Border color from your original styling
+        />
+        <Squircle
+          as="a"
+          href={href}
+          cornerRadius={7.5}
+          cornerSmoothing={0.8}
+          className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
           target={target}
           rel={finalRel}
           {...props}
         >
           {icon}
         </Squircle>
-      );
-    }
-
-    return (
-      <Squircle
-        as="a"
-        href={href}
-        cornerRadius={8}
-        cornerSmoothing={0.8}
-        className={buttonClasses}
-        target={target}
-        rel={finalRel}
-        {...props}
-      >
-        {icon}
-      </Squircle>
+      </div>
     );
   }
 
   return (
-    <Squircle
-      as="button"
-      cornerRadius={8}
-      cornerSmoothing={0.8}
-      className={buttonClasses}
-      disabled={disabled}
-      type={type}
-      onClick={onClick}
-      {...props}
-    >
-      {icon}
-    </Squircle>
+    <div className="relative inline-block">
+      <Squircle
+        cornerRadius={8}
+        cornerSmoothing={0.8}
+        className={`${
+          !isHydrated ? "rounded-xl" : ""
+        } absolute inset-0 bg-gray-300`} // Border color from your original styling
+      />
+      <Squircle
+        as="button"
+        cornerRadius={7.5}
+        cornerSmoothing={0.8}
+        className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+        disabled={disabled}
+        type={type}
+        onClick={onClick}
+        {...props}
+      >
+        {icon}
+      </Squircle>
+    </div>
   );
 };
 

@@ -176,7 +176,7 @@ export default function Banner() {
 
         <div ref={buttonsRef} className="flex items-center gap-6">
           <Button href="#contact">Start your project</Button>
-          <Button variant="stroke" href="#contact">
+          <Button variant="stroke" href="#stories">
             View our work
           </Button>
         </div>
