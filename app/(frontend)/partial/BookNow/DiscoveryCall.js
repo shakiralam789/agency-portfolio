@@ -60,9 +60,9 @@ const DiscoveryCall = forwardRef(({ closeAnim }, ref) => {
                 </ul>
                 <div className="mt-6 space-y-2 font-16 text-para">
                   <P className="text-justify">
-                    A 30 minutes walk through of the software followed by Nuehva
-                    web lab. Or if you prefer, training on specific features
-                    e.g. filtering or portfolio management
+                    A 30 minutes walk through of the software followed by
+                    Nuehva. Or if you prefer, training on specific features e.g.
+                    filtering or portfolio management
                   </P>
 
                   <P className="text-justify">

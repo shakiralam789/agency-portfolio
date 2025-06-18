@@ -13,11 +13,10 @@ export default function StatsSection() {
   const countWrapperRefs = useRef([]);
   const lottieRefs = useRef([]);
 
-  // Ensure all numbers are displayed as at least double digits
   const stats = [
     { value: "10", label: "Team" },
     { value: "310", label: "Projects" },
-    { value: "08", label: "Years" }, // Already formatted as 08
+    { value: "08", label: "Years" },
     { value: "20", label: "Industries" },
   ];
 
@@ -33,8 +32,6 @@ export default function StatsSection() {
         start: "top 60%",
         end: "bottom bottom",
         toggleActions: "play none none none",
-
-        // scrub: 1,
       },
     });
 
@@ -79,16 +76,19 @@ export default function StatsSection() {
           if (!numElement || !plusElement) return;
 
           const targetValue = parseInt(stats[index].value);
-          const counter = { value: 0 };
           const delay = index * 0.15;
 
-          gsap.to(counter, {
-            value: targetValue,
-            duration: 1.5,
+          // Use GSAP's built-in counter animation for smooth increments
+          gsap.fromTo(numElement, {
+            innerText: 0
+          }, {
+            innerText: targetValue,
+            duration: 2,
             delay,
             ease: "power2.out",
-            onUpdate: () => {
-              const currentValue = Math.floor(counter.value);
+            snap: { innerText: 1 }, // This ensures whole numbers
+            onUpdate: function() {
+              const currentValue = Math.round(this.targets()[0].innerText);
               numElement.textContent = formatNumberWithDoubleDigits(
                 currentValue,
                 stats[index].value

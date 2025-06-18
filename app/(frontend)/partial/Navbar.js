@@ -24,8 +24,7 @@ const Navbar = () => {
     { label: "Home", section: "home" },
     { label: "About Us", section: "about" },
     { label: "Services", section: "services" },
-    // { label: "Technologies", section: "technologies" },
-    // { label: "Our Courses", section: "courses" },
+    { label: "Contact Us", section: "contact" },
   ];
 
   function openBookNow() {
@@ -79,9 +78,9 @@ const Navbar = () => {
         {/* Desktop Navigation */}
         <div className="hidden md:flex items-center space-x-8 font-16">
           {navItems.map((item) => (
-            <a
+            <Link
               key={item.section}
-              href={"#" + item.section}
+              href={"/#" + item.section}
               className={`${
                 isActive(item.section)
                   ? "text-green-default font-medium"
@@ -89,7 +88,7 @@ const Navbar = () => {
               } hover:text-gray-900`}
             >
               {item.label}
-            </a>
+            </Link>
           ))}
 
           <Button onClick={openBookNow} className="flex items-center gap-2">
@@ -145,7 +144,7 @@ const Navbar = () => {
             {navItems.map((item) => (
               <Link
                 key={item.section}
-                href={"#" + item.section}
+                href={"/#" + item.section}
                 className={`${
                   isActive(item.section)
                     ? "text-green-600 font-medium"

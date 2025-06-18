@@ -115,15 +115,17 @@ export const Button = ({
   // Keep all your existing classes
   const baseClasses = `${isProcessing ? "relative pointer-events-none" : ""} ${
     disabled ? disabledClasses : ""
-  } cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none ${!isHydrated ? "rounded-xl" : ""}`;
+  } duration-300 cursor-pointer w-fit min-w-fit gap-2 flex items-center justify-center font-medium px-4 2xl:px-5 font-16 py-2.5 2xl:py-3 text-center transition-colors focus:outline-none ${
+    !isHydrated ? "rounded-xl" : ""
+  }`;
 
   const variantClasses = {
     primary:
-      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
+      "bg-primary-dark text-white hover:bg-white hover:text-primary-dark focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
-      "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
+      "bg-white text-gray-700 hover:bg-primary-dark hover:text-white focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
     ghost: "bg-transparent text-gray-400 hover:text-gray-600 hover:bg-gray-50",
     "stroke-icon":
       "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
@@ -177,7 +179,9 @@ export const Button = ({
         <Squircle
           cornerRadius={12}
           cornerSmoothing={0.8}
-          className={`${!isHydrated ? "rounded-xl" : ""} absolute inset-0 bg-gray-300`} // Border color from your original styling
+          className={`${
+            !isHydrated ? "rounded-xl" : ""
+          } absolute inset-0 bg-gray-300`} // Border color from your original styling
         />
 
         {/* Content Squircle (slightly smaller) */}
@@ -218,12 +222,56 @@ export const Button = ({
   if (href && !disabled) {
     if (href.startsWith("/") || href.startsWith("#")) {
       return (
+        <div className="relative inline-block">
+          <Squircle
+            cornerRadius={12}
+            cornerSmoothing={0.8}
+            className={`${
+              !isHydrated ? "rounded-xl" : ""
+            } absolute inset-0 bg-gray-300`} // Border color from your original styling
+          />
+          <Squircle
+            cornerRadius={11.5}
+            cornerSmoothing={0.8}
+            as={Link}
+            href={href}
+            className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+            target={target}
+            rel={finalRel}
+            {...props}
+          >
+            <span
+              className={`flex items-center gap-2 ${
+                pending || isProcessing
+                  ? "opacity-0 pointer-events-none"
+                  : "opacity-100"
+              }`}
+            >
+              {content}
+            </span>
+            {(pending || isProcessing) && (
+              <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
+            )}
+          </Squircle>
+        </div>
+      );
+    }
+
+    return (
+      <div className="relative inline-block">
+        <Squircle
+          cornerRadius={11.5}
+          cornerSmoothing={0.8}
+          className={`${
+            !isHydrated ? "rounded-xl" : ""
+          } absolute inset-0 bg-gray-300`} // Border color from your original styling
+        />
         <Squircle
           cornerRadius={12}
           cornerSmoothing={0.8}
-          as={Link}
+          as={"a"}
           href={href}
-          className={buttonClasses}
+          className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
           target={target}
           rel={finalRel}
           {...props}
@@ -241,18 +289,27 @@ export const Button = ({
             <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
           )}
         </Squircle>
-      );
-    }
+      </div>
+    );
+  }
 
-    return (
+  return (
+    <div className="relative inline-block">
       <Squircle
         cornerRadius={12}
         cornerSmoothing={0.8}
-        as={"a"}
-        href={href}
-        className={buttonClasses}
-        target={target}
-        rel={finalRel}
+        className={`${
+          !isHydrated ? "rounded-xl" : ""
+        } absolute inset-0 bg-gray-300`} // Border color from your original styling
+      />
+      <Squircle
+        cornerRadius={11.5}
+        cornerSmoothing={0.8}
+        className={cn(buttonClasses, "relative m-px")} // m-px gives 1px margin
+        disabled={disabled}
+        type={type}
+        onClick={onClick}
+        as="button"
         {...props}
       >
         <span
@@ -268,33 +325,7 @@ export const Button = ({
           <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
         )}
       </Squircle>
-    );
-  }
-
-  return (
-    <Squircle
-      cornerRadius={12}
-      cornerSmoothing={0.8}
-      className={buttonClasses}
-      disabled={disabled}
-      type={type}
-      onClick={onClick}
-      as="button"
-      {...props}
-    >
-      <span
-        className={`flex items-center gap-2 ${
-          pending || isProcessing
-            ? "opacity-0 pointer-events-none"
-            : "opacity-100"
-        }`}
-      >
-        {content}
-      </span>
-      {(pending || isProcessing) && (
-        <SpinAnim className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2" />
-      )}
-    </Squircle>
+    </div>
   );
 };
 
@@ -320,17 +351,20 @@ export const IconButton = ({
   const disabledClasses = "opacity-50 cursor-not-allowed";
 
   // Base classes for all icon buttons
-  const baseClasses =
-    `${disabled ? disabledClasses : ""} cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none ${!isHydrated ? "rounded-xl" : ""}`;
+  const baseClasses = `${
+    disabled ? disabledClasses : ""
+  } cursor-pointer flex items-center gap-2 justify-center p-2 2xl:p-2.5 transition-colors focus:outline-none ${
+    !isHydrated ? "rounded-xl" : ""
+  }`;
 
   // Classes for different button variants
   const variantClasses = {
     primary:
-      "bg-primary-dark text-white hover:bg-black focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
+      "bg-primary-dark text-white hover:bg-white hover:text-primary-dark focus:ring-2 focus:ring-gray-400 focus:ring-offset-2",
     danger:
       "bg-red-500 text-white hover:bg-red-600 focus:ring-2 focus:ring-red-500 focus:ring-offset-2",
     stroke:
-      "bg-white text-gray-700 hover:bg-gray-50 focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
+      "bg-white text-gray-700 hover:bg-primary-dark hover:text-white focus:ring-2 focus:ring-gray-500/50 focus:ring-offset-2",
     ghost: "bg-transparent text-gray-400 hover:text-gray-600",
   };
 
@@ -353,7 +387,9 @@ export const IconButton = ({
         <Squircle
           cornerRadius={8}
           cornerSmoothing={0.8}
-          className={`${!isHydrated ? "rounded-xl" : ""} absolute inset-0 bg-gray-300 rounded-lg`} // Border color from your original styling
+          className={`${
+            !isHydrated ? "rounded-xl" : ""
+          } absolute inset-0 bg-gray-300 rounded-lg`} // Border color from your original styling
         />
 
         {/* Content Squircle (slightly smaller) */}
